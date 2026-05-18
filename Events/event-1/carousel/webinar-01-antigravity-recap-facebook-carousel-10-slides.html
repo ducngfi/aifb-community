@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel – Webinar 01 Recap | DNTC AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ── Reset & Base ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --midnight: #0A1628;
+      --royal: #1B3A6B;
+      --cyan: #00D4FF;
+      --gold: #D4A520;
+      --white: #FFFFFF;
+      --slate: #8899AA;
+      --soft-cyan: #E0F7FF;
+      --grad-main: linear-gradient(135deg, #0A1628 0%, #1B3A6B 50%, #0A1628 100%);
+      --grad-accent: linear-gradient(180deg, #1B3A6B 0%, #00D4FF 100%);
+      --slide-size: 1080px;
+    }
+
+    body {
+      background: #111;
+      font-family: 'Inter', Arial, sans-serif;
+      color: var(--white);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ── Slide wrapper ── */
+    .slide {
+      width: var(--slide-size);
+      height: var(--slide-size);
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(0, 212, 255, 0.15), 0 0 120px rgba(0, 0, 0, 0.8);
+      flex-shrink: 0;
+    }
+
+    /* ── Grid overlay (circuit pattern) ── */
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+      background-size: 54px 54px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Common brand bar ── */
+    .brand-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--cyan), var(--gold), var(--cyan));
+      z-index: 10;
+    }
+
+    /* ── Slide number ── */
+    .slide-num {
+      position: absolute;
+      bottom: 40px;
+      right: 48px;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--slate);
+      letter-spacing: 1px;
+      z-index: 10;
+    }
+
+    /* ── Logo mark ── */
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.5px;
+    }
+
+    .logo-mark .dot {
+      width: 12px;
+      height: 12px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    /* ── Glow circle decoration ── */
+    .glow-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Cyan line accent ── */
+    .line-accent {
+      display: block;
+      width: 64px;
+      height: 4px;
+      background: var(--cyan);
+      border-radius: 2px;
+      box-shadow: 0 0 12px var(--cyan);
+      margin-bottom: 24px;
+    }
+
+    /* ── Tag / pill ── */
+    .tag {
+      display: inline-block;
+      padding: 10px 24px;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      border-radius: 100px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(0, 212, 255, 0.08);
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 1 — Cover
+  ══════════════════════════════════════ */
+    #s1 {
+      background: var(--grad-main);
+    }
+
+    #s1 .glow-circle.c1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+    }
+
+    #s1 .glow-circle.c2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212, 165, 32, 0.08) 0%, transparent 70%);
+      bottom: -80px;
+      left: -80px;
+    }
+
+    #s1 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 88px;
+    }
+
+    #s1 .event-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    #s1 .event-label .pill {
+      background: rgba(0, 212, 255, 0.15);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 12px 28px;
+      border-radius: 100px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    #s1 .headline {
+      font-size: 86px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+
+    #s1 .headline em {
+      color: var(--cyan);
+      font-style: normal;
+    }
+
+    #s1 .sub {
+      font-size: 34px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 48px;
+      max-width: 800px;
+      line-height: 1.4;
+    }
+
+    #s1 .stats-row {
+      display: flex;
+      gap: 40px;
+    }
+
+    #s1 .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #s1 .stat .num {
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+
+    #s1 .stat .lbl {
+      font-size: 22px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 4px;
+    }
+
+    #s1 .divider {
+      width: 2px;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Global bottom-logo for all slides */
+    .slide .bottom-logo {
+      position: absolute;
+      z-index: 2;
+      bottom: 44px;
+      left: 88px;
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 2 — Problem
+  ══════════════════════════════════════ */
+    #s2 {
+      background: var(--grad-main);
+    }
+
+    #s2 .glow-circle.c1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+      top: 50px;
+      right: -100px;
+    }
+
+    #s2 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s2 .section-tag {
+      margin-bottom: 28px;
+    }
+
+    #s2 h2 {
+      font-size: 64px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    #s2 h2 span {
+      color: var(--cyan);
+    }
+
+    #s2 .desc {
+      font-size: 30px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 40px;
+      max-width: 900px;
+      line-height: 1.5;
+    }
+
+    #s2 .problem-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 16px;
+      padding: 28px 32px;
+      max-width: 900px;
+    }
+
+    #s2 .problem-card .quote-icon {
+      font-size: 56px;
+      color: var(--cyan);
+      line-height: 1;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+
+    #s2 .problem-card p {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    #s2 .arrow-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    #s2 .arrow-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(0, 212, 255, 0.06);
+      border-radius: 12px;
+      padding: 20px 28px;
+    }
+
+    #s2 .arrow-item .icon {
+      font-size: 40px;
+    }
+
+    #s2 .arrow-item .txt {
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    #s2 .arrow-sep {
+      font-size: 36px;
+      color: var(--cyan);
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 3 — Solution Concept
+  ══════════════════════════════════════ */
+    #s3 {
+      background: var(--grad-main);
+    }
+
+    #s3 .glow-circle.c1 {
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.10) 0%, transparent 65%);
+      bottom: -200px;
+      right: -200px;
+    }
+
+    #s3 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s3 .section-tag {
+      margin-bottom: 28px;
+    }
+
+    #s3 h2 {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 40px;
+    }
+
+    #s3 h2 span {
+      color: var(--cyan);
+    }
+
+    #s3 .compare {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      align-items: center;
+    }
+
+    #s3 .col {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+
+    #s3 .col.active {
+      background: rgba(0, 212, 255, 0.07);
+      border-color: rgba(0, 212, 255, 0.4);
+    }
+
+    #s3 .col .col-tag {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    #s3 .col .col-tag.old {
+      color: var(--slate);
+    }
+
+    #s3 .col .col-tag.new {
+      color: var(--cyan);
+    }
+
+    #s3 .col h3 {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    #s3 .col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #s3 .col ul li {
+      font-size: 26px;
+      color: rgba(255, 255, 255, 0.75);
+      padding-left: 24px;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    #s3 .col ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--slate);
+    }
+
+    #s3 .col.active ul li::before {
+      color: var(--cyan);
+    }
+
+    #s3 .vs-circle {
+      width: 72px;
+      height: 72px;
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--cyan);
+      justify-self: center;
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 4 — Antigravity Capabilities
+  ══════════════════════════════════════ */
+    #s4 {
+      background: var(--grad-main);
+    }
+
+    #s4 .glow-circle.c1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212, 165, 32, 0.07) 0%, transparent 70%);
+      top: -100px;
+      left: 50%;
+    }
+
+    #s4 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s4 .section-tag {
+      margin-bottom: 28px;
+    }
+
+    #s4 h2 {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    #s4 h2 span {
+      color: var(--cyan);
+    }
+
+    #s4 .sub-note {
+      font-size: 26px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 32px;
+    }
+
+    #s4 .cap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    #s4 .cap-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    #s4 .cap-item .ic {
+      font-size: 36px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    #s4 .cap-item .txt strong {
+      display: block;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--white);
+    }
+
+    #s4 .cap-item .txt span {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.4;
+    }
+
+    #s4 .price-note {
+      margin-top: 20px;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 12px;
+      padding: 16px 24px;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--cyan);
+    }
+
+    #s4 .price-note span {
+      color: var(--white);
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 5 — Demo #1 HR
+  ══════════════════════════════════════ */
+    #s5 {
+      background: var(--grad-main);
+    }
+
+    #s5 .glow-circle.c1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.10) 0%, transparent 70%);
+      bottom: -80px;
+      right: -80px;
+    }
+
+    #s5 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s5 .demo-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    #s5 .demo-badge .num {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+    #s5 .demo-badge .label {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
+    #s5 h2 {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    #s5 h2 span {
+      color: var(--cyan);
+    }
+
+    #s5 .sub {
+      font-size: 28px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 32px;
+    }
+
+    #s5 .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #s5 .step {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 24px;
+    }
+
+    #s5 .step .arrow {
+      font-size: 28px;
+      color: var(--cyan);
+    }
+
+    #s5 .step .text {
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    #s5 .result-pill {
+      margin-top: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(212, 165, 32, 0.1);
+      border: 1px solid rgba(212, 165, 32, 0.4);
+      border-radius: 100px;
+      padding: 14px 28px;
+    }
+
+    #s5 .result-pill span {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 6 — Demo #2 Website
+  ══════════════════════════════════════ */
+    #s6 {
+      background: var(--grad-main);
+    }
+
+    #s6 .glow-circle.c1 {
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.09) 0%, transparent 70%);
+      top: -100px;
+      left: 50%;
+    }
+
+    #s6 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s6 .demo-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    #s6 .demo-badge .num {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--gold);
+      box-shadow: 0 0 20px rgba(212, 165, 32, 0.3);
+    }
+
+    #s6 .demo-badge .label {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    #s6 h2 {
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    #s6 h2 span {
+      color: var(--gold);
+    }
+
+    #s6 .sub {
+      font-size: 28px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 32px;
+    }
+
+    #s6 .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #s6 .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    #s6 .feature-item .check {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(212, 165, 32, 0.15);
+      border: 1px solid rgba(212, 165, 32, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    #s6 .big-stat {
+      margin-top: 28px;
+      font-size: 90px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(212, 165, 32, 0.4);
+    }
+
+    #s6 .big-stat span {
+      font-size: 34px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 7 — Demo #3 & #4
+  ══════════════════════════════════════ */
+    #s7 {
+      background: var(--grad-main);
+    }
+
+    #s7 .glow-circle.c1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.09) 0%, transparent 70%);
+      bottom: -150px;
+      left: -100px;
+    }
+
+    #s7 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s7 .section-tag {
+      margin-bottom: 28px;
+    }
+
+    #s7 h2 {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+
+    #s7 h2 span {
+      color: var(--cyan);
+    }
+
+    #s7 .demo-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    #s7 .demo-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+
+    #s7 .demo-card .d-num {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    #s7 .demo-card h3 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    #s7 .demo-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #s7 .demo-card ul li {
+      font-size: 22px;
+      color: rgba(255, 255, 255, 0.7);
+      padding-left: 22px;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    #s7 .demo-card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-size: 18px;
+      top: 2px;
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 8 — 5 Best Practices
+  ══════════════════════════════════════ */
+    #s8 {
+      background: var(--grad-main);
+    }
+
+    #s8 .glow-circle.c1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.09) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+    }
+
+    #s8 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s8 .section-tag {
+      margin-bottom: 28px;
+    }
+
+    #s8 h2 {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+
+    #s8 h2 span {
+      color: var(--cyan);
+    }
+
+    #s8 .bp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #s8 .bp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.12);
+      border-radius: 12px;
+      padding: 16px 24px;
+    }
+
+    #s8 .bp-num {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--cyan);
+      opacity: 0.4;
+      flex-shrink: 0;
+      width: 48px;
+      line-height: 1;
+    }
+
+    #s8 .bp-text strong {
+      font-size: 26px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    #s8 .bp-text span {
+      font-size: 22px;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 9 — Quotes
+  ══════════════════════════════════════ */
+    #s9 {
+      background: var(--grad-main);
+    }
+
+    #s9 .glow-circle.c1 {
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #s9 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 88px;
+    }
+
+    #s9 .section-tag {
+      margin-bottom: 28px;
+    }
+
+    #s9 h2 {
+      font-size: 54px;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    #s9 h2 span {
+      color: var(--cyan);
+    }
+
+    #s9 .quotes {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #s9 .quote-card {
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 12px 12px 0;
+      padding: 18px 24px;
+      font-size: 26px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    #s9 .score-row {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    #s9 .score-box {
+      background: rgba(212, 165, 32, 0.1);
+      border: 1px solid rgba(212, 165, 32, 0.4);
+      border-radius: 16px;
+      padding: 20px 32px;
+      text-align: center;
+    }
+
+    #s9 .score-box .score {
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    #s9 .score-box .score-label {
+      font-size: 22px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 6px;
+    }
+
+    #s9 .score-desc {
+      font-size: 26px;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 580px;
+      line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════
+     SLIDE 10 — CTA / Next Event
+  ══════════════════════════════════════ */
+    #s10 {
+      background: var(--grad-main);
+    }
+
+    #s10 .glow-circle.c1 {
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 65%);
+      bottom: -200px;
+      right: -200px;
+    }
+
+    #s10 .glow-circle.c2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212, 165, 32, 0.08) 0%, transparent 70%);
+      top: -100px;
+      left: -50px;
+    }
+
+    #s10 .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 88px;
+    }
+
+    #s10 .section-tag {
+      margin-bottom: 32px;
+    }
+
+    #s10 h2 {
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    #s10 h2 span {
+      color: var(--cyan);
+    }
+
+    #s10 .sub {
+      font-size: 32px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 36px;
+      max-width: 820px;
+      line-height: 1.4;
+    }
+
+    #s10 .next-event {
+      background: rgba(0, 212, 255, 0.07);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 20px;
+      padding: 28px 36px;
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+
+    #s10 .next-event .ne-label {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    #s10 .next-event h3 {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    #s10 .next-event p {
+      font-size: 26px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    #s10 .action-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    #s10 .cta-btn {
+      background: var(--cyan);
+      color: var(--midnight);
+      padding: 20px 48px;
+      border-radius: 14px;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      border: none;
+    }
+
+    #s10 .or-text {
+      font-size: 22px;
+      color: var(--slate);
+    }
+
+    #s10 .ghost-btn {
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      color: var(--cyan);
+      background: transparent;
+      padding: 20px 48px;
+      border-radius: 14px;
+      font-size: 26px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #s10 .bottom-logo {
+      position: absolute;
+      z-index: 2;
+      bottom: 44px;
+      left: 88px;
+    }
+
+    /* ── Slide background image with dark overlay ── */
+    .slide-bg-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      z-index: 0;
+    }
+    .slide-bg-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(10,22,40,0.88) 0%, rgba(27,58,107,0.72) 60%, rgba(10,22,40,0.82) 100%);
+    }
+
+    /* ── Page controls ── */
+    .controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      gap: 8px;
+      z-index: 100;
+    }
+
+    .controls button {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .controls button:hover {
+      background: rgba(0, 212, 255, 0.2);
+      border-color: var(--cyan);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ SLIDE 1 — Cover ══ -->
+  <div class="slide" id="s1">
+    <div class="brand-bar"></div>
+    <div class="slide-bg-img" style="background-image:url('images/ai-agent-automation-hero.png')"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="glow-circle c2"></div>
+    <div class="content">
+      <div class="event-label">
+        <span class="pill">WEBINAR 01 · RECAP</span>
+      </div>
+      <div class="headline">X10<br><em>Hiệu Suất</em><br>Backoffice</div>
+      <div class="sub">Bằng không gian làm việc<br>tự động <strong>Antigravity</strong></div>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="num">150+</span>
+          <span class="lbl">Người tham dự</span>
+        </div>
+        <div class="divider"></div>
+        <div class="stat">
+          <span class="num">120'</span>
+          <span class="lbl">Thời lượng</span>
+        </div>
+        <div class="divider"></div>
+        <div class="stat">
+          <span class="num">9/10</span>
+          <span class="lbl">Điểm đánh giá</span>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">01 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 2 — Problem ══ -->
+  <div class="slide" id="s2">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">Vấn đề</span></div>
+      <h2>Mua ChatGPT Plus<br>nhưng <span>hiệu suất không tăng</span>?</h2>
+      <div class="desc">Hàng trăm doanh nghiệp SME đang gặp phải nghịch lý này — và lý do không phải ở tool, mà ở
+        <strong>tư duy</strong>.</div>
+      <div class="problem-card">
+        <div class="quote-icon">"</div>
+        <p>AI X10 hiệu suất — và vì thế nó X10 cả cái chúng ta giỏi lẫn cái chúng ta kém.</p>
+      </div>
+      <div class="arrow-row">
+        <div class="arrow-item">
+          <div class="icon">💬</div>
+          <div class="txt">Tư duy cũ<br><strong>Hỏi – Đáp</strong></div>
+        </div>
+        <div class="arrow-sep">→</div>
+        <div class="arrow-item">
+          <div class="icon">🤖</div>
+          <div class="txt">Tư duy mới<br><strong>Ủy quyền – Thực thi</strong></div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">02 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 3 — Solution Concept ══ -->
+  <div class="slide" id="s3">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">Giải pháp</span></div>
+      <h2>Prompt-based <span>vs</span><br>Agent-based</h2>
+      <div class="compare">
+        <div class="col">
+          <div class="col-tag old">Cách cũ</div>
+          <h3>Prompt-based</h3>
+          <ul>
+            <li>Hỏi ChatGPT</li>
+            <li>Copy kết quả</li>
+            <li>Paste vào file thủ công</li>
+            <li>Lặp lại mỗi lần</li>
+          </ul>
+        </div>
+        <div class="vs-circle">VS</div>
+        <div class="col active">
+          <div class="col-tag new">Cách mới</div>
+          <h3>Agent-based</h3>
+          <ul>
+            <li>Ủy quyền cho AI</li>
+            <li>AI thực thi chuỗi tác vụ</li>
+            <li>Tự ghi file, gửi mail</li>
+            <li>Huấn luyện 1 lần, dùng mãi</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">03 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 4 — Antigravity Capabilities ══ -->
+  <div class="slide" id="s4">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">Antigravity</span></div>
+      <h2>Không phải chatbot —<br><span>Nó LÀM VIỆC</span></h2>
+      <div class="sub-note">Chỉ từ ~300.000đ/tháng · RAM 8GB là đủ</div>
+      <div class="cap-grid">
+        <div class="cap-item">
+          <div class="ic">📁</div>
+          <div class="txt">
+            <strong>Đọc / tạo / sửa file</strong>
+            <span>Word, Excel, PDF, PowerPoint trực tiếp trên máy tính</span>
+          </div>
+        </div>
+        <div class="cap-item">
+          <div class="ic">📧</div>
+          <div class="txt">
+            <strong>Truy cập email & Drive</strong>
+            <span>Gmail, Google Drive, Google Workspace</span>
+          </div>
+        </div>
+        <div class="cap-item">
+          <div class="ic">🌐</div>
+          <div class="txt">
+            <strong>Tạo website / dashboard</strong>
+            <span>Phần mềm nội bộ trong vài phút, không cần dev</span>
+          </div>
+        </div>
+        <div class="cap-item">
+          <div class="ic">🎙️</div>
+          <div class="txt">
+            <strong>Nghe hiểu giọng nói</strong>
+            <span>Tiếng Việt, ra lệnh và thực thi ngay lập tức</span>
+          </div>
+        </div>
+        <div class="cap-item">
+          <div class="ic">🧠</div>
+          <div class="txt">
+            <strong>Ghi nhớ quy trình</strong>
+            <span>Huấn luyện 1 lần, lần sau chỉ "enter một dòng"</span>
+          </div>
+        </div>
+        <div class="cap-item">
+          <div class="ic">⚡</div>
+          <div class="txt">
+            <strong>Đa tác vụ song song</strong>
+            <span>AI chạy nền, bạn tiếp tục làm việc bình thường</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">04 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 5 — Demo #1 HR ══ -->
+  <div class="slide" id="s5">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="demo-badge">
+        <div class="num">1</div>
+        <div class="label">Demo · Tuyển dụng</div>
+      </div>
+      <h2>AI xử lý <span>142 email</span><br>tuyển dụng tự động</h2>
+      <div class="sub">Kịch bản thực tế từ bộ phận HR</div>
+      <div class="steps">
+        <div class="step">
+          <div class="arrow">→</div>
+          <div class="text">AI vào hòm thư → quét 142 email → lọc CV theo từ khóa</div>
+        </div>
+        <div class="step">
+          <div class="arrow">→</div>
+          <div class="text">Tải CV đính kèm → phân tích hồ sơ → so sánh với JD</div>
+        </div>
+        <div class="step">
+          <div class="arrow">→</div>
+          <div class="text">Chấm điểm từng ứng viên → lên bảng xếp hạng Excel</div>
+        </div>
+        <div class="step">
+          <div class="arrow">→</div>
+          <div class="text">Gửi thư mời PV / từ chối cá nhân hóa — 0 thao tác thủ công</div>
+        </div>
+      </div>
+      <div class="result-pill">
+        <span>⏱ Từ vài ngày → còn vài phút</span>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">05 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 6 — Demo #2 Website ══ -->
+  <div class="slide" id="s6">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="demo-badge">
+        <div class="num">2</div>
+        <div class="label">Demo · Website</div>
+      </div>
+      <h2>Tạo website<br><span>trong 10 phút</span></h2>
+      <div class="sub">Không cần dev, không cần hosting phức tạp</div>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="check">✓</div>
+          Website giới thiệu doanh nghiệp hoàn chỉnh — chạy được ngay
+        </div>
+        <div class="feature-item">
+          <div class="check">✓</div>
+          Tích hợp cổng thanh toán, form đăng ký, landing page
+        </div>
+        <div class="feature-item">
+          <div class="check">✓</div>
+          AI code HTML — dễ chỉnh hơn cả PowerPoint
+        </div>
+        <div class="feature-item">
+          <div class="check">✓</div>
+          Convert sang Google Slides / Canva nếu cần
+        </div>
+      </div>
+      <div class="big-stat">10' <span>từ lệnh → website</span></div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">06 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 7 — Demo #3 & #4 ══ -->
+  <div class="slide" id="s7">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">4 Showcase thực tế</span></div>
+      <h2>"Aha Moment" từ<br><span>Demo trực tiếp</span></h2>
+      <div class="demo-cards">
+        <div class="demo-card">
+          <div class="d-num">Demo 03 · Cấu trúc DN</div>
+          <h3>Thiết lập DN từ zero</h3>
+          <ul>
+            <li>Ra lệnh bằng giọng nói → AI tạo 5 folder phòng ban</li>
+            <li>File mô tả chức năng & định biên nhân sự</li>
+            <li>Bổ sung mức lương → AI sửa file trực tiếp</li>
+            <li>Toàn bộ mất chưa đến 5 phút</li>
+          </ul>
+        </div>
+        <div class="demo-card">
+          <div class="d-num">Demo 04 · Báo cáo</div>
+          <h3>Tạo slide báo cáo</h3>
+          <ul>
+            <li>AI tạo slide bằng HTML</li>
+            <li>Dễ chỉnh sửa hơn PowerPoint</li>
+            <li>Convert sang Google Slides / Canva</li>
+            <li>Trước: 10 ngày → Giờ: 5 phút</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">07 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 8 — 5 Best Practices ══ -->
+  <div class="slide" id="s8">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">Best Practices</span></div>
+      <h2>5 nguyên tắc<br><span>dùng Antigravity đúng</span></h2>
+      <div class="bp-list">
+        <div class="bp-item">
+          <div class="bp-num">01</div>
+          <div class="bp-text">
+            <strong>Chuẩn hóa trước, tự động hóa sau</strong>
+            <span>Quy trình lộn xộn = AI cũng lộn xộn</span>
+          </div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">02</div>
+          <div class="bp-text">
+            <strong>Viết quy trình thành file .md</strong>
+            <span>Đừng để trong đầu người — AI đọc & lặp lại vô hạn</span>
+          </div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">03</div>
+          <div class="bp-text">
+            <strong>Huấn luyện dần</strong>
+            <span>Mỗi lần dạy thêm 1 chút = được giải phóng thêm 1 chút</span>
+          </div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">04</div>
+          <div class="bp-text">
+            <strong>Lãnh đạo dùng trước, lan tỏa sau</strong>
+            <span>Văn hóa AI phải đi từ trên xuống</span>
+          </div>
+        </div>
+        <div class="bp-item">
+          <div class="bp-num">05</div>
+          <div class="bp-text">
+            <strong>Chọn hệ sinh thái cởi mở</strong>
+            <span>Google Workspace, Slack, Telegram &gt; Zalo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">08 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 9 — Quotes + Score ══ -->
+  <div class="slide" id="s9">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">Góc nhìn cộng đồng</span></div>
+      <h2>Điều thành viên<br><span>nói sau sự kiện</span></h2>
+      <div class="quotes">
+        <div class="quote-card">"Trước tốn 10 ngày để edit pitch file. Giờ mất 5 phút."</div>
+        <div class="quote-card">"Tư duy cũ: quản lý spa bằng cảm giác. Cách mới: dữ liệu tổng hợp và phân tích tự động."
+        </div>
+        <div class="quote-card">"Chuẩn hóa → Số hóa → Tự động hóa. Mindset là chuẩn hóa trước nha!"</div>
+      </div>
+      <div class="score-row">
+        <div class="score-box">
+          <div class="score">9/10</div>
+          <div class="score-label">Điểm đánh giá TB</div>
+        </div>
+        <div class="score-desc">Gần 100 người ở lại đến phút cuối dù sự kiện kéo dài thêm 30 phút.</div>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">09 / 10</div>
+  </div>
+
+  <!-- ══ SLIDE 10 — CTA ══ -->
+  <div class="slide" id="s10">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow-circle c1"></div>
+    <div class="glow-circle c2"></div>
+    <div class="content">
+      <div class="section-tag"><span class="tag">Webinar 02 · Sắp diễn ra</span></div>
+      <h2>AI không phải<br><span>lựa chọn "có hay không"</span><br>nữa rồi</h2>
+      <div class="sub">Câu hỏi bây giờ là:<br><strong>Chuyển đổi thế nào?</strong></div>
+      <div class="next-event">
+        <div class="ne-label">Webinar 02</div>
+        <h3>Showcase AI cho Sale, Marketing &amp; CSKH</h3>
+        <p>Các nhà cung cấp giải pháp demo trực tiếp — sắp ra mắt.</p>
+      </div>
+      <div class="action-row">
+        <a href="https://autobiz.ai.vn/" target="_blank" style="text-decoration:none;"><button class="cta-btn">Tham gia
+            cộng đồng ngay</button></a>
+      </div>
+    </div>
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">10 / 10</div>
+  </div>
+
+</body>
+
+</html>

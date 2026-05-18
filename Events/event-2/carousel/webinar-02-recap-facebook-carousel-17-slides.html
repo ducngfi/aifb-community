@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel – Webinar 02 Recap | DNTC AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Extracted from event-2 posters: deep navy-blue palette */
+      --midnight: #000840;   /* poster darkest bg */
+      --royal: #001878;      /* poster mid bg */
+      --accent-blue: #0028D0; /* poster electric blue accent */
+      --periwinkle: #4A70D8; /* poster face-card highlight */
+      --cyan: #00D4FF;       /* DNTC AI brand — kept for readability */
+      --gold: #D4A520;
+      --white: #FFFFFF;
+      --slate: #B0C4D8;
+      --grad-main: linear-gradient(135deg, #000840 0%, #001878 50%, #000840 100%);
+      --slide-size: 1080px;
+    }
+
+    body {
+      background: #111;
+      font-family: 'Inter', Arial, sans-serif;
+      color: var(--white);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ── Slide wrapper ── */
+    .slide {
+      width: var(--slide-size);
+      height: var(--slide-size);
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(0,40,208,0.3), 0 0 120px rgba(0,0,0,0.9);
+      flex-shrink: 0;
+      background: var(--grad-main);
+    }
+
+    /* ── Grid overlay ── */
+    .grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,40,208,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,40,208,0.07) 1px, transparent 1px);
+      background-size: 54px 54px;
+      pointer-events: none; z-index: 1;
+    }
+
+    /* ── Brand bar ── */
+    .brand-bar {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--periwinkle), var(--cyan), var(--periwinkle), var(--accent-blue));
+      z-index: 10;
+    }
+
+    /* ── Slide number ── */
+    .slide-num {
+      position: absolute; bottom: 40px; right: 48px;
+      font-size: 22px; font-weight: 600; color: var(--slate);
+      z-index: 10;
+    }
+
+    /* ── Footer logo ── */
+    .bottom-logo {
+      position: absolute; bottom: 44px; left: 88px;
+      z-index: 10;
+    }
+    .logo-mark {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 22px; font-weight: 700; color: var(--cyan);
+    }
+    .logo-mark .dot {
+      width: 12px; height: 12px;
+      background: var(--cyan); border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    /* ── Tag / Pill ── */
+    .tag {
+      display: inline-block;
+      padding: 10px 28px; border-radius: 100px;
+      font-size: 22px; font-weight: 700; color: var(--cyan);
+      border: 1.5px solid rgba(0,212,255,0.4);
+      background: rgba(0,212,255,0.08);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .tag-gold {
+      color: var(--gold);
+      border-color: rgba(212,165,32,0.4);
+      background: rgba(212,165,32,0.08);
+    }
+
+    /* ── Content container ── */
+    .content {
+      position: relative; z-index: 2;
+      padding: 80px 88px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 80px; height: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--periwinkle), var(--cyan));
+      margin: 28px 0;
+    }
+
+    /* ── Speaker portrait ── */
+    .portrait-wrap {
+      width: 180px; height: 180px;
+      border-radius: 50%; overflow: hidden;
+      border: 3px solid var(--periwinkle);
+      box-shadow: 0 0 30px rgba(74,112,216,0.5), 0 0 8px rgba(0,40,208,0.6);
+      flex-shrink: 0;
+    }
+    .portrait-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 50% 62%;
+      transform: scale(2.4);
+      transform-origin: 50% 62%;
+    }
+
+    /* ── Pain point / Feature item ── */
+    .pain-item {
+      display: flex; align-items: flex-start; gap: 22px;
+      margin-bottom: 32px;
+    }
+    .pain-icon {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 800;
+      background: rgba(0,212,255,0.12);
+      border: 1.5px solid rgba(0,212,255,0.3);
+      color: var(--cyan);
+    }
+    .pain-icon.gold {
+      background: rgba(212,165,32,0.12);
+      border-color: rgba(212,165,32,0.3);
+      color: var(--gold);
+    }
+    .pain-text { font-size: 30px; font-weight: 500; line-height: 1.4; color: var(--white); }
+    .pain-text strong { color: var(--cyan); }
+
+    /* ── Stat card ── */
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 16px;
+      padding: 32px 36px;
+      flex: 1;
+    }
+    .stat-num { font-size: 64px; font-weight: 900; color: var(--cyan); line-height: 1; }
+    .stat-num.gold { color: var(--gold); }
+    .stat-label { font-size: 24px; font-weight: 500; color: var(--slate); margin-top: 8px; }
+
+    /* ── Case study row ── */
+    .case-row {
+      display: flex; align-items: flex-start; gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .case-row:last-child { border-bottom: none; }
+    .case-badge {
+      flex-shrink: 0;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 12px;
+      padding: 8px 18px;
+      font-size: 22px; font-weight: 700; color: var(--cyan);
+      white-space: nowrap;
+    }
+    .case-badge.gold {
+      background: rgba(212,165,32,0.1);
+      border-color: rgba(212,165,32,0.3);
+      color: var(--gold);
+    }
+    .case-text { font-size: 27px; font-weight: 500; line-height: 1.45; }
+    .case-text strong { color: var(--cyan); }
+
+    /* ── Feature checkmark list ── */
+    .feat-item {
+      display: flex; align-items: flex-start; gap: 20px;
+      margin-bottom: 28px;
+    }
+    .feat-check {
+      font-size: 28px; line-height: 1.2; flex-shrink: 0; margin-top: 2px;
+    }
+    .feat-text { font-size: 28px; font-weight: 500; line-height: 1.4; }
+    .feat-text strong { color: var(--cyan); font-weight: 700; }
+
+    /* ── Screenshot frame ── */
+    .screen-frame {
+      border-radius: 12px; overflow: hidden;
+      border: 1.5px solid rgba(0,212,255,0.25);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    .screen-frame img { width: 100%; display: block; }
+
+    /* ── Quote block ── */
+    .quote-block {
+      background: rgba(0,212,255,0.06);
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 16px 16px 0;
+      padding: 32px 40px;
+      font-size: 28px; font-weight: 500;
+      font-style: italic; line-height: 1.5;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ── Slide 1: Cover ── */
+    #s1 .bg-glow {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(0,40,208,0.22) 0%, transparent 70%);
+    }
+    #s1 .title-wrap { margin-top: 60px; }
+
+    /* ── Slide 2: Highlights ── */
+    #s2 .highlight-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; margin-top: 40px;
+    }
+    #s2 .hl-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 20px; padding: 40px 36px;
+      text-align: center;
+    }
+    #s2 .hl-num { font-size: 80px; font-weight: 900; line-height: 1; }
+    #s2 .hl-desc { font-size: 24px; font-weight: 500; color: var(--slate); margin-top: 12px; }
+
+    /* ── Speaker intro slide ── */
+    .speaker-intro-wrap {
+      display: flex; align-items: center; gap: 56px;
+      margin-top: 48px;
+    }
+    .speaker-info .speaker-name {
+      font-size: 56px; font-weight: 900; line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .speaker-info .speaker-role {
+      font-size: 28px; font-weight: 500; color: var(--slate);
+      margin-bottom: 36px;
+    }
+    .showcase-label {
+      font-size: 22px; font-weight: 700; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .showcase-topic {
+      font-size: 34px; font-weight: 700; color: var(--white);
+      line-height: 1.35;
+    }
+    .showcase-topic span { color: var(--cyan); }
+
+    /* ── Takeaway numbered list ── */
+    .takeaway-item {
+      display: flex; align-items: flex-start; gap: 28px;
+      margin-bottom: 30px;
+    }
+    .takeaway-num {
+      font-size: 42px; font-weight: 900; color: var(--cyan);
+      line-height: 1; flex-shrink: 0; min-width: 50px;
+    }
+    .takeaway-text { font-size: 28px; font-weight: 500; line-height: 1.4; }
+    .takeaway-text strong { color: var(--gold); }
+
+    /* ── CTA slide ── */
+    #s17 .cta-box {
+      margin-top: 48px;
+      background: rgba(0,212,255,0.06);
+      border: 1.5px solid rgba(0,212,255,0.3);
+      border-radius: 24px;
+      padding: 56px;
+      text-align: center;
+    }
+    #s17 .cta-headline {
+      font-size: 52px; font-weight: 900; line-height: 1.25;
+      margin-bottom: 28px;
+    }
+    #s17 .cta-sub {
+      font-size: 28px; font-weight: 500; color: var(--slate);
+      margin-bottom: 44px;
+    }
+    #s17 .cta-pill {
+      display: inline-block;
+      padding: 20px 56px; border-radius: 100px;
+      font-size: 30px; font-weight: 800;
+      background: linear-gradient(90deg, var(--accent-blue), var(--periwinkle), var(--cyan));
+      color: var(--white);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 01 — COVER                        ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s1">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+  <div class="bg-glow"></div>
+
+  <div class="content" style="text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+    <div class="tag">Webinar 02 · Recap</div>
+
+    <div class="title-wrap">
+      <div style="font-size:32px; font-weight:600; color:var(--slate); margin-bottom:20px; letter-spacing:2px; text-transform:uppercase;">AI & Tối Ưu Hiệu Suất</div>
+      <div style="font-size:96px; font-weight:900; line-height:1.05; letter-spacing:-1px;">Sales &amp;<br>Marketing</div>
+      <div style="margin:36px auto; width:120px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--cyan),var(--gold));"></div>
+      <div style="font-size:46px; font-weight:700; color:var(--slate); max-width:800px; line-height:1.45;">
+        3 Showcase Demo Trực Tiếp từ
+      </div>
+      <div style="font-size:52px; font-weight:900; color:var(--white); line-height:1.35; margin-top:12px;">
+        Vidtory AI &nbsp;·&nbsp; Filum AI &nbsp;·&nbsp; Smax AI
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">01 / 17</div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — VIDTORY: SPEAKER INTRO       ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s2">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <!-- Accent glow behind portrait -->
+  <div style="position:absolute; right:120px; top:50%; transform:translateY(-50%); width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(0,40,208,0.20) 0%, transparent 70%); z-index:1; pointer-events:none;"></div>
+
+  <div class="content" style="padding-top:100px;">
+    <div class="tag">Showcase #1</div>
+    <div class="divider"></div>
+
+    <div class="speaker-intro-wrap">
+      <div class="portrait-wrap" style="width:220px; height:220px;">
+        <img src="../event-posters/Le-Huy-Duc-Anh-Vidtory.png" alt="Lê Huy Đức Anh">
+      </div>
+      <div class="speaker-info">
+        <div class="speaker-name">Lê Huy Đức Anh</div>
+        <div class="speaker-role">Founder · Vidtory.ai</div>
+        <div class="showcase-label">Chủ đề showcase</div>
+        <div class="showcase-topic">
+          Hạ tầng sản xuất<br>nội dung <span>AI toàn diện</span><br>cho doanh nghiệp
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:64px; background:rgba(0,212,255,0.06); border-radius:16px; padding:32px 40px;">
+      <div style="font-size:26px; font-weight:500; color:var(--slate); line-height:1.6;">
+        Chỉ <strong style="color:var(--cyan); font-size:32px;">3 người</strong> — phục vụ hơn
+        <strong style="color:var(--gold); font-size:32px;">10+ khách hàng</strong> với AI Video, Banner, Infographic &amp; Voice Studio.
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">02 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — VIDTORY: PAIN POINTS         ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s3">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:90px;">
+    <div class="tag">Vấn đề · Vidtory</div>
+    <div style="font-size:58px; font-weight:900; line-height:1.1; margin:24px 0 44px;">
+      Doanh nghiệp đang<br><span style="color:var(--cyan);">gặp phải điều này?</span>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">1</div>
+      <div class="pain-text">Quá nhiều AI trên thị trường — <strong>không biết chọn công cụ nào</strong> phù hợp</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">2</div>
+      <div class="pain-text">Nhân sự dùng AI mỗi người một kiểu → <strong>chất lượng đầu ra không đồng đều</strong></div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">3</div>
+      <div class="pain-text">Switch tool liên tục ChatGPT → Midjourney → CapCut → Canva → <strong>mất thời gian, thiếu nhất quán</strong></div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">4</div>
+      <div class="pain-text">Nhân sự vừa làm việc cũ, <strong>vừa phải tự học công nghệ mới</strong> — áp lực đào tạo chồng chất</div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">03 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — VIDTORY: SOLUTION FEATURES   ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s4">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:80px;">
+    <div style="display:flex; align-items:center; gap:24px; margin-bottom:8px;">
+      <div class="tag">Giải pháp · Vidtory</div>
+    </div>
+    <div style="font-size:54px; font-weight:900; line-height:1.15; margin:20px 0 40px;">
+      <span style="color:var(--cyan);">AI Studio</span> — một nền tảng,<br>tất cả content
+    </div>
+
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--cyan);">✦</div>
+      <div class="feat-text"><strong>AI Video Studio</strong> — nhập kịch bản → AI tách phân cảnh → tạo ảnh &amp; video tự động, giữ nguyên brand</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--cyan);">✦</div>
+      <div class="feat-text"><strong>AI Banner App</strong> — generate banner đa kích thước (Facebook, YouTube, TikTok, Instagram)</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--cyan);">✦</div>
+      <div class="feat-text"><strong>AI Infographic &amp; Data Animation</strong> — visualize dữ liệu thành infographic có animation</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--gold);">✦</div>
+      <div class="feat-text"><strong style="color:var(--gold);">Auto QC Layer</strong> — tự động audit, regenerate nếu không pass. Lỗi giảm từ <strong style="color:var(--gold);">40–50%</strong> xuống <strong style="color:var(--gold);">~10–15%</strong></div>
+    </div>
+
+    <div style="margin-top:28px;">
+      <div class="screen-frame">
+        <img src="../images/Vidtory-demo.png" alt="Vidtory Demo" style="width:100%; height:auto; display:block;">
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">04 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — VIDTORY: CASE STUDIES        ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s5">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:90px;">
+    <div class="tag">Case Studies · Vidtory</div>
+    <div style="font-size:58px; font-weight:900; line-height:1.1; margin:24px 0 36px;">
+      Ai đang dùng<br><span style="color:var(--cyan);">Vidtory AI?</span>
+    </div>
+
+    <div class="case-row">
+      <div class="case-badge">Party Group</div>
+      <div class="case-text">Thị trường Mỹ — Video UGC, podcast, product shot &amp; lifestyle image cho <strong>Facebook / TikTok / Instagram</strong></div>
+    </div>
+    <div class="case-row">
+      <div class="case-badge">DVB &amp; Insul</div>
+      <div class="case-text">Bảo hiểm / Đào tạo — Sản xuất <strong>bài giảng video tự động</strong> mà không cần thuê quay dựng</div>
+    </div>
+    <div class="case-row">
+      <div class="case-badge gold">Kilon Bruno</div>
+      <div class="case-text">Studio hoạt hình — <strong>Hệ thống nhân vật bản quyền nhất quán</strong>, sản xuất content giữ đồng bộ visual</div>
+    </div>
+
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">05 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE XX — VIDTORY: ƯU ĐÃI CỘNG ĐỒNG   ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s6">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 110%, rgba(0,40,208,0.22) 0%, transparent 60%); z-index:0;"></div>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+    <div class="tag" style="align-self:flex-start;">Ưu đãi · Vidtory</div>
+    <div style="font-size:64px; font-weight:900; line-height:1.1; margin:28px 0 16px;">
+      🎁 Quà tặng<br><span style="color:var(--cyan);">từ Vidtory AI</span>
+    </div>
+    <div class="divider"></div>
+
+    <div style="display:flex; flex-direction:column; gap:28px; margin-top:16px;">
+      <div style="background:rgba(0,40,208,0.10); border:1.5px solid rgba(74,112,216,0.4); border-radius:20px; padding:44px 52px; display:flex; align-items:center; gap:36px;">
+        <div style="font-size:64px;">🏗️</div>
+        <div>
+          <div style="font-size:34px; font-weight:800; color:var(--white); margin-bottom:10px;">Gói Customize</div>
+          <div style="font-size:30px; font-weight:500; color:var(--slate);">Tặng <strong style="color:var(--cyan); font-size:36px;">2 tháng</strong> chi phí hạ tầng AI</div>
+        </div>
+      </div>
+      <div style="background:rgba(0,40,208,0.10); border:1.5px solid rgba(74,112,216,0.4); border-radius:20px; padding:44px 52px; display:flex; align-items:center; gap:36px;">
+        <div style="font-size:64px;">☁️</div>
+        <div>
+          <div style="font-size:34px; font-weight:800; color:var(--white); margin-bottom:10px;">Gói SaaS</div>
+          <div style="font-size:30px; font-weight:500; color:var(--slate);">Tặng <strong style="color:var(--cyan); font-size:36px;">1–3 tháng</strong> miễn phí sử dụng</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px; font-size:26px; font-weight:600; color:var(--slate); text-align:center;">
+      💬 Liên hệ admin để nhận ưu đãi
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">06 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 07 — FILUM: SPEAKER INTRO         ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s7">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div style="position:absolute; right:120px; top:50%; transform:translateY(-50%); width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(0,40,208,0.18) 0%, transparent 70%); z-index:1; pointer-events:none;"></div>
+
+  <div class="content" style="padding-top:100px;">
+    <div class="tag">Showcase #2</div>
+    <div class="divider"></div>
+
+    <div class="speaker-intro-wrap">
+      <div class="portrait-wrap" style="width:220px; height:220px;">
+        <img src="../event-posters/Le-Thuy-Dung-Filum.png" alt="Lê Thuỳ Dung">
+      </div>
+      <div class="speaker-info">
+        <div class="speaker-name">Lê Thuỳ Dung</div>
+        <div class="speaker-role">Business Solution · Filum.ai</div>
+        <div class="showcase-label">Chủ đề showcase</div>
+        <div class="showcase-topic">
+          AI Agent trực chat<br><span>bán hàng &amp; chăm sóc</span><br>khách hàng đa kênh
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:64px; background:rgba(0,212,255,0.06); border-radius:16px; padding:32px 40px;">
+      <div style="font-size:26px; font-weight:500; color:var(--slate); line-height:1.6;">
+        Go-live từ <strong style="color:var(--gold);">Hoàng Hà Mobile</strong> hơn 1 năm — đến nay tự tin onboarding khách hàng tích cực trên các ngành <strong style="color:var(--cyan);">spa, bệnh viện, F&amp;B, bán lẻ.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">07 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — FILUM: PAIN POINTS           ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s8">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:90px;">
+    <div class="tag">Vấn đề · Filum</div>
+    <div style="font-size:58px; font-weight:900; line-height:1.1; margin:24px 0 44px;">
+      Bài toán chat<br><span style="color:var(--cyan);">quen thuộc của doanh nghiệp</span>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">1</div>
+      <div class="pain-text">Nhân viên ngồi trực chat thủ công, <strong>lặp đi lặp lại</strong> câu FAQ mỗi ngày</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">2</div>
+      <div class="pain-text"><strong>Phân mảnh kênh</strong> — nhiều Shopee, Lazada, fanpage, Zalo OA, Zalo cá nhân…</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">3</div>
+      <div class="pain-text">Mùa cao điểm (ngày đôi, lễ tết) → traffic bùng nổ, <strong>không đủ nhân sự</strong> xử lý</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-icon">4</div>
+      <div class="pain-text">Mỗi sale tư vấn một kiểu → <strong>thiếu nhất quán</strong>, khó kiểm soát chất lượng</div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">08 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — FILUM: SOLUTION              ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s9">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:72px;">
+    <div class="tag">Giải pháp · Filum</div>
+    <div style="font-size:52px; font-weight:900; line-height:1.15; margin:20px 0 36px;">
+      <span style="color:var(--cyan);">AI Agent</span> xử lý chat<br>thực chiến 24/7
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px;">
+      <div style="background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.2); border-radius:16px; padding:28px;">
+        <div style="font-size:28px; font-weight:700; color:var(--cyan); margin-bottom:10px;">🌐 Đa kênh</div>
+        <div style="font-size:24px; color:rgba(255,255,255,0.8);">Fanpage · Zalo OA · Shopee · Lazada · Webchat · App</div>
+      </div>
+      <div style="background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.2); border-radius:16px; padding:28px;">
+        <div style="font-size:28px; font-weight:700; color:var(--cyan); margin-bottom:10px;">🗣 Đa ngôn ngữ</div>
+        <div style="font-size:24px; color:rgba(255,255,255,0.8);">Việt · Anh · Mã Lai · Philippines · Trung — mix trong 1 hội thoại</div>
+      </div>
+      <div style="background:rgba(212,165,32,0.06); border:1px solid rgba(212,165,32,0.2); border-radius:16px; padding:28px;">
+        <div style="font-size:28px; font-weight:700; color:var(--gold); margin-bottom:10px;">🔄 Handoff AI ↔ Người</div>
+        <div style="font-size:24px; color:rgba(255,255,255,0.8);">AI xử lý phần lặp, nhân viên nhảy vào khi cần đồng cảm/bảo mật</div>
+      </div>
+      <div style="background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.2); border-radius:16px; padding:28px;">
+        <div style="font-size:28px; font-weight:700; color:var(--cyan); margin-bottom:10px;">🔗 Tích hợp sẵn</div>
+        <div style="font-size:24px; color:rgba(255,255,255,0.8);">Haravan · KiotViet · Sapo — check tồn kho, tạo đơn tức thì</div>
+      </div>
+    </div>
+
+    <div class="screen-frame">
+      <img src="../images/Filum-demo.png" alt="Filum Demo" style="width:100%; height:auto; display:block;">
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">09 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — FILUM: CASE STUDIES          ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s10">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:90px;">
+    <div class="tag">Case Studies · Filum</div>
+    <div style="font-size:56px; font-weight:900; line-height:1.1; margin:24px 0 36px;">
+      Filum AI <span style="color:var(--cyan);">đang chạy thực chiến</span><br>ở đâu?
+    </div>
+
+    <div class="case-row">
+      <div class="case-badge">Zus Coffee</div>
+      <div class="case-text">Chuỗi F&amp;B 1.000 cửa hàng · 4 quốc gia — AI xử lý <strong>1.000–2.000 hội thoại/ngày</strong>, đa ngôn ngữ</div>
+    </div>
+    <div class="case-row">
+      <div class="case-badge gold">Huy Thanh Jewelry</div>
+      <div class="case-text">Vàng bạc trang sức — AI trực chat ngày vía Thần Tài, <strong>handle gần hết volume tin nhắn</strong></div>
+    </div>
+    <div class="case-row">
+      <div class="case-badge">Sidotech</div>
+      <div class="case-text">E-commerce Shopee — AI xử lý hướng dẫn sử dụng, đặt hàng, FAQ, <strong>giảm tải đáng kể</strong> cho nhân viên</div>
+    </div>
+    <div class="case-row">
+      <div class="case-badge">Đ.T. Giá Kho</div>
+      <div class="case-text">Bán lẻ điện thoại — AI tư vấn mùa cao điểm, xử lý <strong>nhiều SKU + nhiều ưu đãi</strong> cùng lúc</div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">10 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — SMAX: SPEAKER INTRO          ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s11">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div style="position:absolute; right:100px; top:50%; transform:translateY(-50%); width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(0,40,208,0.18) 0%, transparent 70%); z-index:1; pointer-events:none;"></div>
+
+  <div class="content" style="padding-top:100px;">
+    <div class="tag">Showcase #3</div>
+    <div class="divider"></div>
+
+    <div class="speaker-intro-wrap">
+      <div class="portrait-wrap" style="width:220px; height:220px; border-color:var(--periwinkle); box-shadow:0 0 30px rgba(74,112,216,0.5), 0 0 8px rgba(0,40,208,0.6);">
+        <img src="../event-posters/Phan-Hoang-Ba-Smax.png" alt="Phan Hoàng Ba">
+      </div>
+      <div class="speaker-info">
+        <div class="speaker-name">Phan Hoàng Ba</div>
+        <div class="speaker-role">CEO &amp; Founder · Smax.ai</div>
+        <div class="showcase-label">Chủ đề showcase</div>
+        <div class="showcase-topic">
+          Khai thác dữ liệu<br>hội thoại &amp; <span>tối ưu</span><br>chuyển đổi đa kênh
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:64px; background:rgba(212,165,32,0.06); border:1px solid rgba(212,165,32,0.2); border-radius:16px; padding:32px 40px;">
+      <div style="font-size:26px; font-weight:500; color:var(--slate); line-height:1.6;">
+        Đối tác chính thức của <strong style="color:var(--gold);">Meta &amp; Zalo</strong> tại Việt Nam — cung cấp hệ sinh thái AI automation cho Sale &amp; Marketing.
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">11 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — SMAX: SOLUTION               ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s12">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:80px;">
+    <div class="tag">Giải pháp · Smax</div>
+    <div style="font-size:50px; font-weight:900; line-height:1.15; margin:20px 0 36px;">
+      Mô hình <span style="color:var(--gold);">Hybrid</span><br>AI + Nhân viên + Chatbot
+    </div>
+
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--cyan);">✦</div>
+      <div class="feat-text"><strong>AI Chat Agent</strong> — tạo bot AI trong 1 phút, miễn phí ChatGPT khi dùng Smax</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--cyan);">✦</div>
+      <div class="feat-text"><strong>AI Insight</strong> — phân tích hội thoại, phân tệp KH theo nhu cầu (giá, chất lượng, ưu đãi…)</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--gold);">✦</div>
+      <div class="feat-text"><strong style="color:var(--gold);">Remarketing đa kênh</strong> — FMM, Zalo ZNS/ZBS, Zalo cá nhân BRC, Email</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-check" style="color:var(--cyan);">✦</div>
+      <div class="feat-text"><strong>Automation Map</strong> — khảo sát DN → AI tạo checklist triển khai cá nhân hóa</div>
+    </div>
+
+    <div class="screen-frame" style="margin-top:16px;">
+      <img src="../images/Smax-demo.png" alt="Smax Demo" style="width:100%; height:auto; display:block;">
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">12 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — SMAX: KEY METRICS            ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s13">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:90px;">
+    <div class="tag">Số liệu thực chiến · Smax</div>
+    <div style="font-size:56px; font-weight:900; line-height:1.1; margin:24px 0 40px;">
+      Con số <span style="color:var(--gold);">chứng minh</span><br>AI bán hàng được
+    </div>
+
+    <div style="display:flex; gap:28px; margin-bottom:36px;">
+      <div class="stat-card" style="text-align:center;">
+        <div class="stat-num gold">8.67%</div>
+        <div class="stat-label">Tỉ lệ chốt đơn AI (Vella)<br>vs nhân viên: 10.29%</div>
+      </div>
+      <div class="stat-card" style="text-align:center;">
+        <div class="stat-num">98.8%</div>
+        <div class="stat-label">Chat được AI xử lý<br>tại Di Động Việt</div>
+      </div>
+      <div class="stat-card" style="text-align:center;">
+        <div class="stat-num gold">100%</div>
+        <div class="stat-label">Comment livestream<br>IMAT — AI tự trả lời</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      "Anh không để ý nữa vì AI trả lời hết rồi."
+      <div style="margin-top:12px; font-size:22px; color:var(--slate); font-style:normal;">— Anh Tịnh, IMAT</div>
+    </div>
+
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">13 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE XX — SMAX: ƯU ĐÃI CỘNG ĐỒNG      ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s14">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 110%, rgba(0,40,208,0.22) 0%, transparent 60%); z-index:0;"></div>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+    <div class="tag" style="align-self:flex-start;">Ưu đãi · Smax</div>
+    <div style="font-size:64px; font-weight:900; line-height:1.1; margin:28px 0 16px;">
+      🎁 Quà tặng<br><span style="color:var(--cyan);">từ Smax AI</span>
+    </div>
+    <div class="divider"></div>
+
+    <div style="display:flex; flex-direction:column; gap:28px; margin-top:16px;">
+      <div style="background:rgba(0,40,208,0.10); border:1.5px solid rgba(74,112,216,0.4); border-radius:20px; padding:44px 52px; display:flex; align-items:center; gap:36px;">
+        <div style="font-size:64px;">🎟️</div>
+        <div>
+          <div style="font-size:34px; font-weight:800; color:var(--white); margin-bottom:10px;">Voucher nền tảng</div>
+          <div style="font-size:30px; font-weight:500; color:var(--slate);"><strong style="color:var(--cyan); font-size:36px;">20 voucher</strong> giảm <strong style="color:var(--cyan);">30%</strong> phí nền tảng</div>
+        </div>
+      </div>
+      <div style="background:rgba(0,40,208,0.10); border:1.5px solid rgba(74,112,216,0.4); border-radius:20px; padding:44px 52px; display:flex; align-items:center; gap:36px;">
+        <div style="font-size:64px;">🚀</div>
+        <div>
+          <div style="font-size:34px; font-weight:800; color:var(--white); margin-bottom:10px;">Kickstart &amp; Tư vấn 1:1</div>
+          <div style="font-size:30px; font-weight:500; color:var(--slate);"><strong style="color:var(--cyan); font-size:36px;">5 gói</strong> kickstart + tư vấn cá nhân hóa</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px; font-size:26px; font-weight:600; color:var(--slate); text-align:center;">
+      💬 Liên hệ admin để nhận ưu đãi
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">14 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 15 — Q&A HIGHLIGHTS               ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s15">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:80px;">
+    <div class="tag">Q&amp;A Nổi bật</div>
+    <div style="font-size:56px; font-weight:900; line-height:1.1; margin:24px 0 40px;">
+      Cộng đồng hỏi<br><span style="color:var(--cyan);">diễn giả trả lời</span>
+    </div>
+
+    <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.15); border-radius:16px; padding:28px 36px; margin-bottom:24px;">
+      <div style="font-size:24px; font-weight:700; color:var(--cyan); margin-bottom:10px;">❓ ChatGPT nhưng hiệu suất không tăng?</div>
+      <div style="font-size:26px; font-weight:500; line-height:1.45;">Vấn đề không phải <strong>công cụ</strong>, mà là <strong style="color:var(--cyan);">bài toán</strong>. Phải đưa bài toán mới — quy mô lớn hơn, đa nền tảng — mới ứng dụng triệt để được.</div>
+    </div>
+    <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.15); border-radius:16px; padding:28px 36px; margin-bottom:24px;">
+      <div style="font-size:24px; font-weight:700; color:var(--cyan); margin-bottom:10px;">❓ Doanh nghiệp nhỏ 5–10 người có dùng được không?</div>
+      <div style="font-size:26px; font-weight:500; line-height:1.45;"><strong style="color:var(--gold);">Càng nhỏ càng có lợi thế</strong> — quyết định nhanh, chi phí thấp. Team 3 người vận hành 1.000 tài khoản Facebook với KOL ảo.</div>
+    </div>
+    <div style="background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.15); border-radius:16px; padding:28px 36px;">
+      <div style="font-size:24px; font-weight:700; color:var(--cyan); margin-bottom:10px;">❓ AI có xử lý được ngành spa, mỹ phẩm, du lịch?</div>
+      <div style="font-size:26px; font-weight:500; line-height:1.45;"><strong style="color:var(--cyan);">Được</strong>, nếu đi từ kịch bản nghiệp vụ. Train AI như train nhân viên mới — Filum đã triển khai thành công.</div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">15 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — KEY TAKEAWAYS                ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s16">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+
+  <div class="content" style="padding-top:80px;">
+    <div class="tag">Bài học rút ra</div>
+    <div style="font-size:56px; font-weight:900; line-height:1.1; margin:24px 0 44px;">
+      5 điều bạn cần<br><span style="color:var(--cyan);">nhớ sau hôm nay</span>
+    </div>
+
+    <div class="takeaway-item">
+      <div class="takeaway-num">01</div>
+      <div class="takeaway-text">AI <strong>không chỉ dành cho doanh nghiệp lớn</strong> — team 3 người cũng vận hành được hệ thống quy mô lớn</div>
+    </div>
+    <div class="takeaway-item">
+      <div class="takeaway-num">02</div>
+      <div class="takeaway-text"><strong>Bài toán đúng &gt; Công cụ đúng</strong> — đưa công cụ mà không đổi bài toán = thêm gánh nặng</div>
+    </div>
+    <div class="takeaway-item">
+      <div class="takeaway-num">03</div>
+      <div class="takeaway-text">Hành trình triển khai AI <strong>không dễ, nhưng đã có proven case</strong> — Filum, Smax đều có số liệu thực</div>
+    </div>
+    <div class="takeaway-item">
+      <div class="takeaway-num">04</div>
+      <div class="takeaway-text"><strong style="color:var(--gold);">Dữ liệu hội thoại là "mỏ vàng"</strong> — mỗi chat là insight, mỗi insight dẫn đến hành động</div>
+    </div>
+    <div class="takeaway-item">
+      <div class="takeaway-num">05</div>
+      <div class="takeaway-text">AI chốt đơn đạt <strong style="color:var(--gold);">8.67%</strong> vs nhân viên <strong>10.29%</strong> — chênh 1.5% nhưng <strong>AI scale lên 1.000+ nhân sự ảo</strong></div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">16 / 17</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║  SLIDE 02 — CTA                          ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="slide" id="s17">
+  <div class="brand-bar"></div>
+  <div class="grid-overlay"></div>
+  <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+    <defs>
+      <radialGradient id="pg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/><stop offset="100%" stop-color="#0028D0" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- Glow orbs -->
+    <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+    <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+    <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+    <!-- Ring outlines -->
+    <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+    <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+    <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+    <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+    <!-- Scattered dots -->
+    <circle cx="72"  cy="118" r="3"   fill="#4A70D8" opacity="0.40"/>
+    <circle cx="198" cy="74"  r="2"   fill="#00D4FF" opacity="0.30"/>
+    <circle cx="358" cy="142" r="4"   fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="504" cy="58"  r="2"   fill="#4A70D8" opacity="0.32"/>
+    <circle cx="682" cy="98"  r="3"   fill="#00D4FF" opacity="0.24"/>
+    <circle cx="846" cy="48"  r="2"   fill="#FFFFFF"  opacity="0.18"/>
+    <circle cx="1008" cy="284" r="3"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="1044" cy="452" r="2"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="986"  cy="608" r="4"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="1026" cy="756" r="2"  fill="#4A70D8" opacity="0.24"/>
+    <circle cx="906"  cy="956" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="746"  cy="1024" r="2" fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+    <circle cx="402"  cy="1004" r="2" fill="#00D4FF" opacity="0.20"/>
+    <circle cx="238"  cy="1042" r="4" fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="58"   cy="962" r="2"  fill="#4A70D8" opacity="0.28"/>
+    <circle cx="28"   cy="702" r="3"  fill="#00D4FF" opacity="0.20"/>
+    <circle cx="48"   cy="498" r="2"  fill="#FFFFFF"  opacity="0.14"/>
+    <circle cx="18"   cy="318" r="3"  fill="#4A70D8" opacity="0.22"/>
+    <circle cx="164"  cy="418" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="296"  cy="298" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="762"  cy="348" r="2"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="618"  cy="276" r="3"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="462"  cy="362" r="2"  fill="#FFFFFF"  opacity="0.12"/>
+    <circle cx="862"  cy="702" r="3"  fill="#4A70D8" opacity="0.18"/>
+    <circle cx="702"  cy="804" r="2"  fill="#00D4FF" opacity="0.14"/>
+    <circle cx="340"  cy="680" r="2"  fill="#4A70D8" opacity="0.16"/>
+    <circle cx="640"  cy="940" r="3"  fill="#FFFFFF"  opacity="0.10"/>
+    <circle cx="180"  cy="560" r="2"  fill="#00D4FF" opacity="0.16"/>
+    <!-- Cross / plus markers -->
+    <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+    <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+    <line x1="348" y1="800" x2="374" y2="800" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="361" y1="787" x2="361" y2="813" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.14"/>
+    <line x1="680" y1="480" x2="700" y2="480" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <line x1="690" y1="470" x2="690" y2="490" stroke="#4A70D8" stroke-width="1"   opacity="0.16"/>
+    <!-- Diamond shapes -->
+    <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+    <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+    <polygon points="280,740 290,752 280,764 270,752" fill="none" stroke="#FFFFFF"  stroke-width="0.9" opacity="0.12"/>
+    <!-- Hexagon outlines -->
+    <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+    <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+    <!-- Connecting lines (sparse circuit feel) -->
+    <line x1="72" y1="118" x2="198" y2="74"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    <line x1="846" y1="48"  x2="1008" y2="284" stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+    <line x1="58"  y1="962" x2="238" y2="1042" stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+  </svg>
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 90% 60% at 50% 100%, rgba(0,40,208,0.22) 0%, transparent 60%); z-index:0;"></div>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; height:100%; text-align:center;">
+    <div class="tag" style="display:inline-block; margin:0 auto;">Dành cho CEO & Lãnh đạo doanh nghiệp</div>
+
+    <div style="margin-top:40px; font-size:76px; font-weight:900; line-height:1.1;">
+      Tham gia cộng đồng<br><span style="color:var(--cyan);">AI thực chiến</span><br>cùng 400+ CEO
+    </div>
+
+    <div style="margin:32px auto; width:120px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--accent-blue),var(--periwinkle),var(--cyan));"></div>
+
+    <div style="font-size:28px; font-weight:500; color:var(--slate); line-height:1.6; max-width:800px; margin:0 auto 44px;">
+      Học hỏi thực chiến — chia sẻ bài toán — kết nối đồng nghiệp.<br>
+      <strong style="color:var(--white);">Webinar hàng tuần, tối Thứ 5.</strong>
+    </div>
+
+    <div class="cta-box" style="max-width:800px; margin:0 auto;">
+      <div style="display:flex; justify-content:center; gap:48px; margin-bottom:40px;">
+        <div>
+          <div style="font-size:52px; font-weight:900; color:var(--cyan);">400+</div>
+          <div style="font-size:22px; color:var(--slate);">CEO & Lãnh đạo</div>
+        </div>
+        <div style="width:1px; background:rgba(255,255,255,0.1);"></div>
+        <div>
+          <div style="font-size:52px; font-weight:900; color:var(--gold);">60%+</div>
+          <div style="font-size:22px; color:var(--slate);">C-level</div>
+        </div>
+        <div style="width:1px; background:rgba(255,255,255,0.1);"></div>
+        <div>
+          <div style="font-size:52px; font-weight:900; color:var(--cyan);">Tối T5</div>
+          <div style="font-size:22px; color:var(--slate);">Webinar hàng tuần</div>
+        </div>
+      </div>
+      <div class="cta-pill">👉 Inbox Admin để tham gia ngay</div>
+    </div>
+  </div>
+
+  <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+  <div class="slide-num">17 / 17</div>
+</div>
+
+</body>
+</html>

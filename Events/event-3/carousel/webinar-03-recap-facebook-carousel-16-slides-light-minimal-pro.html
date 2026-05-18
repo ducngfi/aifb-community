@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel – Webinar 03 Recap | DNTC AI · Light Minimal Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Light Minimal Pro Theme ── */
+    :root {
+      --midnight:    #F8F9FC;   /* light background */
+      --royal:       #FFFFFF;
+      --accent-blue: #0028D0;
+      --periwinkle:  #4A70D8;
+      --cyan:        #0028D0;   /* electric blue replaces cyan for light theme */
+      --gold:        #D4A520;
+      --white:       #0A1628;   /* dark navy — text on light bg */
+      --slate:       #8899AA;
+      --text-primary: #0A1628;
+      --grad-main:   linear-gradient(135deg, #F8F9FC 0%, #FFFFFF 50%, #F8F9FC 100%);
+      --slide-size:  1080px;
+    }
+
+    body {
+      background: #EAECF2;
+      font-family: 'Inter', Arial, sans-serif;
+      color: var(--white);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ── Slide wrapper ── */
+    .slide {
+      width: var(--slide-size);
+      height: var(--slide-size);
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 0 40px rgba(0,40,208,0.12), 0 4px 20px rgba(0,0,0,0.08);
+      flex-shrink: 0;
+      background: var(--grad-main);
+    }
+
+    /* ── Grid overlay — very subtle on light bg ── */
+    .grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,40,208,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,40,208,0.04) 1px, transparent 1px);
+      background-size: 54px 54px;
+      pointer-events: none; z-index: 1;
+    }
+
+    /* ── Brand bar — same as dark theme for consistent brand identity ── */
+    .brand-bar {
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #0028D0, #4A70D8, #00D4FF, #4A70D8, #0028D0);
+      z-index: 10;
+    }
+
+    /* ── Footer logo ── */
+    .bottom-logo {
+      position: absolute; z-index: 10;
+      bottom: 44px; left: 88px;
+    }
+    .logo-mark {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 22px; font-weight: 700; color: #0028D0;
+    }
+    .logo-mark .dot {
+      width: 12px; height: 12px; background: #0028D0;
+      border-radius: 50%; box-shadow: 0 0 10px rgba(0,40,208,0.4);
+      flex-shrink: 0;
+    }
+
+    /* ── Slide number ── */
+    .slide-num {
+      position: absolute; bottom: 40px; right: 48px;
+      font-size: 22px; font-weight: 600; color: #8899AA;
+      z-index: 10;
+    }
+
+    /* ── Content area ── */
+    .content {
+      position: relative; z-index: 5;
+      padding: 80px 88px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Tag / pill ── */
+    .tag {
+      display: inline-block; align-self: flex-start;
+      padding: 10px 28px; border-radius: 100px;
+      font-size: 22px; font-weight: 700; color: #0028D0;
+      border: 1.5px solid rgba(0,40,208,0.3);
+      background: rgba(0,40,208,0.06);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .tag-gold {
+      color: var(--gold);
+      border-color: rgba(212,165,32,0.4);
+      background: rgba(212,165,32,0.06);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 80px; height: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, #0028D0, #4A70D8, #00D4FF);
+      margin: 28px 0;
+      flex-shrink: 0;
+    }
+
+    /* ── Speaker portrait ── */
+    .portrait-wrap {
+      width: 220px; height: 220px;
+      border-radius: 50%; overflow: hidden;
+      border: 3px solid var(--periwinkle);
+      box-shadow: 0 0 20px rgba(74,112,216,0.3), 0 0 6px rgba(0,40,208,0.3);
+      flex-shrink: 0;
+    }
+    .portrait-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Bullet list ── */
+    .bullet-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .bullet-list li {
+      display: flex; align-items: flex-start; gap: 18px;
+      font-size: 30px; font-weight: 500; color: #0A1628;
+      line-height: 1.4;
+    }
+    .bullet-list li .ico {
+      font-size: 28px; flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* ── Check list ── */
+    .check-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 22px;
+    }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 18px;
+      font-size: 28px; font-weight: 500; color: #0A1628;
+      line-height: 1.4;
+    }
+    .check-list li .chk {
+      color: #0028D0; font-size: 28px; flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* ── Stat cards ── */
+    .stat-row {
+      display: flex; gap: 28px; margin-top: 8px;
+    }
+    .stat-card {
+      flex: 1;
+      background: rgba(0,40,208,0.06);
+      border: 1px solid rgba(74,112,216,0.25);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .stat-card .num {
+      font-size: 62px; font-weight: 900; color: #0028D0;
+      line-height: 1;
+    }
+    .stat-card .label {
+      font-size: 22px; font-weight: 600; color: #8899AA;
+      margin-top: 10px; line-height: 1.3;
+    }
+
+    /* ── Case study table ── */
+    .case-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .case-table th {
+      background: rgba(0,40,208,0.10);
+      color: #0028D0;
+      font-size: 24px; font-weight: 700;
+      padding: 18px 22px;
+      text-align: left;
+      border-bottom: 1.5px solid rgba(74,112,216,0.3);
+    }
+    .case-table td {
+      font-size: 24px; font-weight: 500; color: #0A1628;
+      padding: 16px 22px;
+      border-bottom: 1px solid rgba(74,112,216,0.12);
+      vertical-align: top;
+      line-height: 1.4;
+    }
+    .case-table tr:last-child td { border-bottom: none; }
+    .case-table tr:nth-child(even) td { background: rgba(0,40,208,0.03); }
+    .result-text { color: #0028D0; font-weight: 700; }
+
+    /* ── Q&A cards ── */
+    .qa-list {
+      display: flex; flex-direction: column; gap: 30px;
+      margin-top: 8px;
+    }
+    .qa-card {
+      background: rgba(0,40,208,0.05);
+      border-left: 4px solid #0028D0;
+      border-radius: 0 12px 12px 0;
+      padding: 24px 28px;
+    }
+    .qa-card .q {
+      font-size: 26px; font-weight: 700; color: #0028D0;
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .qa-card .a {
+      font-size: 25px; font-weight: 500; color: #0A1628;
+      line-height: 1.45;
+    }
+
+    /* ── Takeaway numbered ── */
+    .takeaway-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 26px;
+    }
+    .takeaway-list li {
+      display: flex; align-items: flex-start; gap: 22px;
+    }
+    .takeaway-list li .num-badge {
+      min-width: 52px; height: 52px;
+      background: linear-gradient(135deg, #0028D0, #4A70D8);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 900; color: #FFFFFF;
+      flex-shrink: 0;
+    }
+    .takeaway-list li .text {
+      font-size: 28px; font-weight: 500; color: #0A1628;
+      line-height: 1.4; padding-top: 10px;
+    }
+
+    /* ── CTA button ── */
+    .cta-btn {
+      display: inline-block; align-self: flex-start;
+      padding: 22px 52px;
+      background: linear-gradient(90deg, #0028D0, #4A70D8);
+      border-radius: 100px;
+      font-size: 30px; font-weight: 800; color: #FFFFFF;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 20px rgba(0,40,208,0.3);
+    }
+
+    /* ── Cover specific ── */
+    .cover-webinar-badge {
+      font-size: 26px; font-weight: 700; color: #8899AA;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .cover-title {
+      font-size: 68px; font-weight: 900; color: #0A1628;
+      line-height: 1.1;
+    }
+    .cover-title span { color: #0028D0; }
+    .cover-speakers {
+      display: flex; flex-direction: column; gap: 14px;
+      margin-top: 32px;
+    }
+    .cover-speaker-row {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .cover-speaker-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--periwinkle); flex-shrink: 0;
+    }
+    .cover-speaker-name {
+      font-size: 28px; font-weight: 700; color: #0A1628;
+    }
+    .cover-speaker-role {
+      font-size: 24px; font-weight: 500; color: #8899AA;
+    }
+    .cover-stat-strip {
+      display: flex; gap: 40px; margin-top: 40px;
+    }
+    .cover-stat {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .cover-stat .val {
+      font-size: 46px; font-weight: 900; color: var(--gold);
+      line-height: 1;
+    }
+    .cover-stat .lbl {
+      font-size: 22px; font-weight: 600; color: #8899AA;
+    }
+
+    /* ── Speaker intro specific ── */
+    .speaker-row {
+      display: flex; align-items: flex-start; gap: 44px;
+    }
+    .speaker-meta {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .speaker-name {
+      font-size: 52px; font-weight: 900; color: #0A1628;
+      line-height: 1.1;
+    }
+    .speaker-role {
+      font-size: 28px; font-weight: 600; color: #0028D0;
+    }
+    .speaker-company {
+      font-size: 28px; font-weight: 600; color: #8899AA;
+    }
+    .speaker-teaser {
+      font-size: 28px; font-weight: 500; color: #0A1628;
+      line-height: 1.5;
+      background: rgba(0,40,208,0.05);
+      border-left: 4px solid var(--periwinkle);
+      border-radius: 0 12px 12px 0;
+      padding: 24px 28px;
+      margin-top: 8px;
+    }
+
+    /* ── Glow accent box ── */
+    .accent-box {
+      background: rgba(0,40,208,0.04);
+      border: 1.5px solid rgba(0,40,208,0.15);
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+    .accent-box-gold {
+      background: rgba(212,165,32,0.05);
+      border-color: rgba(212,165,32,0.25);
+    }
+
+    /* ── Highlight number inline ── */
+    .hl { color: #0028D0; font-weight: 800; }
+    .hl-gold { color: var(--gold); font-weight: 800; }
+
+    /* ── Particles — reduced for light bg ── */
+    .particles-bg { opacity: 0.25; }
+
+    /* ── Corner decorations — abstract glowing shapes at slide edges ── */
+    .corner-deco { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ Shared gradient defs for corner decorations ══════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden;">
+    <defs>
+      <!-- Top-right: electric blue glow -->
+      <radialGradient id="cd-tr" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#0028D0" stop-opacity="0.28"/>
+        <stop offset="55%"  stop-color="#4A70D8" stop-opacity="0.12"/>
+        <stop offset="100%" stop-color="#0028D0" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Bottom-left: violet/purple glow -->
+      <radialGradient id="cd-bl" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#6D28D9" stop-opacity="0.22"/>
+        <stop offset="55%"  stop-color="#9D68F8" stop-opacity="0.10"/>
+        <stop offset="100%" stop-color="#6D28D9" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Top-left: teal/cyan accent -->
+      <radialGradient id="cd-tl" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#0891B2" stop-opacity="0.18"/>
+        <stop offset="55%"  stop-color="#00D4FF" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#0891B2" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Bottom-right: periwinkle glow -->
+      <radialGradient id="cd-br" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#4A70D8" stop-opacity="0.22"/>
+        <stop offset="55%"  stop-color="#0028D0" stop-opacity="0.10"/>
+        <stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Side accent: warm rose for variety on some slides -->
+      <radialGradient id="cd-rose" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#DB2777" stop-opacity="0.14"/>
+        <stop offset="100%" stop-color="#DB2777" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 01 — COVER
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s1">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080"
+         style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;">
+      <defs>
+        <radialGradient id="pg1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0028D0" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#0028D0" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="pg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4A70D8" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#4A70D8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="pg3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.10"/>
+          <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/>
+      <ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/>
+      <ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/>
+      <circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/>
+      <circle cx="960" cy="155" r="85"  fill="none" stroke="#00D4FF" stroke-width="0.6" opacity="0.10"/>
+      <circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+      <circle cx="540" cy="540" r="280" fill="none" stroke="#0028D0" stroke-width="0.8" opacity="0.07"/>
+      <circle cx="200" cy="200" r="60"  fill="none" stroke="#4A70D8" stroke-width="0.8" opacity="0.10"/>
+      <circle cx="72"  cy="118" r="3" fill="#4A70D8" opacity="0.40"/>
+      <circle cx="198" cy="74"  r="2" fill="#00D4FF" opacity="0.30"/>
+      <circle cx="358" cy="142" r="4" fill="#FFFFFF"  opacity="0.14"/>
+      <circle cx="682" cy="98"  r="3" fill="#00D4FF" opacity="0.24"/>
+      <circle cx="1008" cy="284" r="3" fill="#4A70D8" opacity="0.28"/>
+      <circle cx="986"  cy="608" r="4" fill="#FFFFFF"  opacity="0.12"/>
+      <circle cx="906"  cy="956" r="3" fill="#00D4FF" opacity="0.20"/>
+      <circle cx="562"  cy="1052" r="3" fill="#4A70D8" opacity="0.28"/>
+      <circle cx="58"   cy="962" r="2" fill="#4A70D8" opacity="0.28"/>
+      <circle cx="18"   cy="318" r="3" fill="#4A70D8" opacity="0.22"/>
+      <line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+      <line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/>
+      <line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+      <line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/>
+      <polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/>
+      <polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/>
+      <polygon points="202,602 222,591 242,602 242,624 222,635 202,624" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/>
+      <polygon points="820,300 840,289 860,300 860,322 840,333 820,322" fill="none" stroke="#00D4FF" stroke-width="1" opacity="0.10"/>
+      <line x1="72"  y1="118" x2="198" y2="74"   stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+      <line x1="846" y1="48"  x2="1008" y2="284"  stroke="#4A70D8" stroke-width="0.5" opacity="0.08"/>
+      <line x1="58"  y1="962" x2="238" y2="1042"  stroke="#4A70D8" stroke-width="0.5" opacity="0.10"/>
+    </svg>
+
+    <div class="content" style="justify-content:center; gap:0;">
+      <div class="cover-webinar-badge">WEBINAR 03 · 26/03/2026 · RECAP</div>
+      <div class="cover-title">
+        AI & Tối Ưu<br>
+        <span>Hiệu Suất</span><br>
+        Quản Trị &amp; Vận Hành
+      </div>
+
+      <div class="divider" style="margin:32px 0 24px;"></div>
+
+      <div class="cover-speakers">
+        <div class="cover-speaker-row">
+          <div class="cover-speaker-dot"></div>
+          <div>
+            <span class="cover-speaker-name">Nguyễn Đình Phong</span>
+            <span class="cover-speaker-role" style="font-size:22px; margin-left:12px;">CTO · Danish Software</span>
+          </div>
+        </div>
+        <div class="cover-speaker-row">
+          <div class="cover-speaker-dot"></div>
+          <div>
+            <span class="cover-speaker-name">Nguyễn Thanh Thủy</span>
+            <span class="cover-speaker-role" style="font-size:22px; margin-left:12px;">Sales Manager · Rikkei Digital</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cover-stat-strip">
+        <div class="cover-stat">
+          <div class="val">#03</div>
+          <div class="lbl">Webinar Series</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-logo">
+      <div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div>
+    </div>
+    <div class="slide-num">01 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 02 — PHONG INTRO
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s2">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/><circle cx="1008" cy="284" r="3" fill="#4A70D8" opacity="0.28"/><circle cx="58" cy="962" r="2" fill="#4A70D8" opacity="0.28"/></svg>
+
+    <div class="content" style="justify-content:center; gap:36px;">
+      <div class="tag">SHOWCASE #1 · AI ENTERPRISE OS</div>
+
+      <div class="speaker-row" style="align-items:center;">
+        <div class="portrait-wrap">
+          <img src="../speakers/Nguyen-Dinh-Phong-DanishSoftware.jpg" alt="Nguyễn Đình Phong"
+               style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="speaker-meta">
+          <div class="speaker-name">Nguyễn Đình Phong</div>
+          <div class="speaker-role">CTO</div>
+          <div class="speaker-company">Danish Software</div>
+          <div style="margin-top:8px; font-size:24px; font-weight:500; color:#8899AA;">15 năm trong lĩnh vực phần mềm &amp; chuyển đổi số · Admin &amp; đồng sáng lập cộng đồng</div>
+        </div>
+      </div>
+
+      <div class="speaker-teaser">
+        💡 <strong style="color:#0028D0;">Chủ đề:</strong> Xây dựng hệ thống tập trung dữ liệu, quy trình và tri thức doanh nghiệp — để AI thực sự vận hành thay vì chỉ hỗ trợ từng cá nhân.
+      </div>
+
+      <div class="accent-box" style="padding:20px 28px;">
+        <span style="font-size:26px; font-weight:700; color:var(--gold);">❝</span>
+        <span style="font-size:26px; font-weight:500; color:#0A1628; line-height:1.5;"> Doanh nghiệp không thiếu AI — doanh nghiệp đang thiếu <strong style="color:#0028D0;">hệ thống để AI thực sự vận hành.</strong></span>
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">02 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 03 — PHONG PAIN POINTS
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s3">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px;">Vấn đề · AI Enterprise OS</div>
+      <div style="font-size:52px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">Bài toán doanh nghiệp<br><span style="color:#0028D0;">vẫn còn nguyên sau cả chục năm</span></div>
+      <div class="divider"></div>
+
+      <ul class="bullet-list">
+        <li><span class="ico">📊</span><span>Báo cáo chậm — các phòng ban <strong>báo cáo mãi không xong</strong></span></li>
+        <li><span class="ico">📦</span><span>Dữ liệu <strong>phân tán trên nhiều phần mềm</strong> — mỗi app ghi nhận một kiểu khác nhau</span></li>
+        <li><span class="ico">🔧</span><span>Công cụ ra mắt liên tục, không biết chọn cái nào — mỗi cái lại <strong>tốn thêm nguồn lực</strong></span></li>
+        <li><span class="ico">🧠</span><span>Tri thức nằm trong <strong>từng cá nhân</strong> — người rời đi, kinh nghiệm vận hành biến mất</span></li>
+        <li><span class="ico">🔒</span><span>Giao tiếp rời rạc, bảo mật thông tin <strong>chưa được kiểm soát</strong></span></li>
+      </ul>
+
+      <div class="accent-box" style="margin-top:auto; margin-bottom:100px; padding:20px 28px;">
+        <span style="font-size:26px; color:var(--gold); font-weight:700;">💬 Phản ứng cộng đồng:</span>
+        <span style="font-size:26px; color:#0A1628; font-weight:500;"> "Full combo luôn" — "Từ khi đi làm thuê đến startup đều gặp hết"</span>
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">03 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 04 — PHONG SOLUTION
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s4">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px; align-self:flex-start;">Giải pháp · Danish Software</div>
+      <div style="font-size:54px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">AI Enterprise OS<br><span style="color:#0028D0; font-size:42px;">Hệ điều hành doanh nghiệp toàn diện</span></div>
+      <div class="divider"></div>
+      <ul class="check-list">
+        <li><span class="chk">✅</span><span><strong>Tập trung dữ liệu:</strong> AI agent tự kéo data từ các app, merge &amp; làm sạch — không cần xử lý thủ công</span></li>
+        <li><span class="chk">✅</span><span><strong>Nhân sự số (Digital Employee):</strong> AI hoạt động 24/7, không quên, không nghỉ</span></li>
+        <li><span class="chk">✅</span><span><strong>Debate AI:</strong> Hai agent đọc chéo, hỏi lẫn nhau → đảm bảo không bị nhiễu thông tin</span></li>
+        <li><span class="chk">✅</span><span><strong>Data warehouse + quản trị:</strong> Không cần app bên thứ ba — lưu trữ và quản lý trong một nền tảng</span></li>
+        <li><span class="chk">✅</span><span><strong>Lưu trữ linh hoạt:</strong> AWS · Azure · Viettel IDC — bảo mật cao, chi phí hợp lý</span></li>
+      </ul>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">04 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 05 — PHONG DEMO SCREENSHOT
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s5">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:20px; justify-content:center;">
+      <div class="tag" style="align-self:flex-start;">Demo · AI Enterprise OS</div>
+      <div style="font-size:40px; font-weight:800; color:#0A1628; line-height:1.2;">Giao diện hệ thống <span style="color:#0028D0;">Danish Software</span></div>
+      <div class="divider"></div>
+      <div style="border-radius:14px; overflow:hidden; border:2px solid rgba(0,40,208,0.2); box-shadow:0 8px 40px rgba(0,0,0,0.12);">
+        <img src="../images/Dannishsoftware-demo.png" alt="Danish Software demo" style="width:100%; height:auto; display:block;">
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">05 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 06 — PHONG CASE STUDIES
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s6">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px;">Case Studies · Danish Software</div>
+      <div style="font-size:52px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">Kết quả <span style="color:#0028D0;">đo lường được</span></div>
+      <div class="divider"></div>
+
+      <table class="case-table">
+        <thead>
+          <tr>
+            <th>Doanh nghiệp</th>
+            <th>Bài toán</th>
+            <th>Kết quả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sản xuất F2C<br><span style="color:#8899AA; font-size:20px;">Bán nhà máy → người tiêu dùng</span></td>
+            <td>Cần nhiều kế toán &amp; nhân viên xử lý TMĐT</td>
+            <td><span class="result-text">↓ 50% nhân sự</span><br>AI xử lý hoàn hủy tự động</td>
+          </tr>
+          <tr>
+            <td>Tập đoàn<br>Bất động sản<br><span style="color:#8899AA; font-size:20px;">400+ nhân sự</span></td>
+            <td>40 kế toán nhập liệu thủ công, báo cáo chậm</td>
+            <td><span class="result-text">↓ 50% nhân sự</span><br>Từ 40 → 20 người</td>
+          </tr>
+          <tr>
+            <td>E-commerce<br><span style="color:#8899AA; font-size:20px;">2 doanh nghiệp lớn</span></td>
+            <td>Muốn tự động hóa quảng cáo &amp; test sản phẩm mới</td>
+            <td><span class="result-text">Test &amp; launch nhanh hơn</span><br>Không cần platform bên ngoài</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">06 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 07 — PHONG GIFT / OFFER
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s7">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:40px; justify-content:center; align-items:center; text-align:center;">
+      <div style="font-size:80px; line-height:1;">🎁</div>
+      <div class="tag" style="align-self:center;">Ưu đãi đặc biệt · Danish Software</div>
+      <div style="font-size:52px; font-weight:900; color:#0A1628; line-height:1.2;">Dành riêng cho<br><span style="color:#0028D0;">Cộng Đồng DNTC AI</span></div>
+      <div class="divider" style="align-self:center;"></div>
+      <div style="display:flex; flex-direction:column; gap:24px; width:100%;">
+        <div style="background:rgba(0,40,208,0.05); border:1.5px solid rgba(0,40,208,0.2); border-radius:16px; padding:28px 40px; font-size:30px; font-weight:600; color:#0A1628; text-align:left;">
+          ✅ Tư vấn đánh giá hiện trạng dữ liệu <strong style="color:#0028D0;">miễn phí</strong>
+        </div>
+        <div style="background:rgba(212,165,32,0.07); border:1.5px solid rgba(212,165,32,0.35); border-radius:16px; padding:28px 40px; font-size:30px; font-weight:600; color:#0A1628; text-align:left;">
+          💰 <strong style="color:var(--gold);">Giảm 20%</strong> chi phí khi triển khai
+        </div>
+        <div style="background:rgba(74,112,216,0.07); border:1.5px solid rgba(74,112,216,0.25); border-radius:16px; padding:28px 40px; font-size:30px; font-weight:600; color:#0A1628; text-align:left;">
+          📋 Bảng giá theo quy mô nhân sự — <strong style="color:#0028D0;">lần đầu công bố cho SME</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">07 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 08 — THỦY INTRO
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s8">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="justify-content:center; gap:36px;">
+      <div class="tag">SHOWCASE #2 · AI AUDITED OKR</div>
+
+      <div class="speaker-row" style="align-items:center;">
+        <div class="portrait-wrap">
+          <img src="../speakers/Nguyen-Thanh-Thuy-Rikkei-Digital.jpeg" alt="Nguyễn Thanh Thủy"
+               style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div class="speaker-meta">
+          <div class="speaker-name">Nguyễn Thanh Thủy</div>
+          <div class="speaker-role">Sales Manager</div>
+          <div class="speaker-company">Rikkei Digital</div>
+          <div style="margin-top:8px; font-size:24px; font-weight:500; color:#8899AA;">5 năm tư vấn chuyển đổi số cho doanh nghiệp từ SME đến Enterprise</div>
+        </div>
+      </div>
+
+      <div class="speaker-teaser">
+        💡 <strong style="color:#0028D0;">Chủ đề:</strong> Biến OKR từ "file theo dõi" thành <strong>hệ thống vận hành sống</strong> — AI kiểm tra, cảnh báo và cập nhật tiến độ mục tiêu theo thời gian thực trên nền tảng Lark Suite.
+      </div>
+
+      <div class="accent-box" style="padding:20px 28px;">
+        <span style="font-size:26px; font-weight:700; color:var(--gold);">❝</span>
+        <span style="font-size:26px; font-weight:500; color:#0A1628; line-height:1.5;"> Mục tiêu không còn là <strong style="color:#0028D0;">chân giấy</strong> — AI audit để đảm bảo mọi OKR đều đo lường được.</span>
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">08 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 09 — THỦY PAIN POINTS
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s9">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px;">Vấn đề · AI Audited OKR</div>
+      <div style="font-size:52px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">OKR trên Excel —<br><span style="color:#0028D0;">78% mục tiêu mơ hồ</span></div>
+      <div class="divider"></div>
+
+      <ul class="bullet-list">
+        <li><span class="ico">🎯</span><span><strong>78% Objective không đạt chuẩn</strong> — không có số đo lường, không align với ban lãnh đạo</span></li>
+        <li><span class="ico">📋</span><span>Nhân sự nhầm Key Result thành <strong>task (mô tả việc làm)</strong> thay vì kết quả đầu ra</span></li>
+        <li><span class="ico">📊</span><span>Nhân sự <strong>tự đánh giá</strong> → 100% dữ liệu chủ quan, thiếu minh bạch</span></li>
+        <li><span class="ico">⏳</span><span>Team hiệu suất <strong>liên tục review &amp; chỉnh sửa OKR</strong> — lãng phí effort khổng lồ</span></li>
+        <li><span class="ico">📁</span><span>Dữ liệu trên <strong>Excel gửi đi gửi lại</strong> — không real-time, lãnh đạo không giám sát kịp</span></li>
+      </ul>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">09 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 10 — THỦY SOLUTION
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s10">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px; align-self:flex-start;">Giải pháp · Rikkei Digital</div>
+      <div style="font-size:50px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">AI Audited OKR<br><span style="color:#0028D0; font-size:38px;">trên nền tảng Lark Suite</span></div>
+      <div class="divider"></div>
+      <ul class="check-list">
+        <li><span class="chk">✅</span><span><strong>Lark Suite all-in-one:</strong> Messenger, Doc, Meeting, mini HRM, mini CRM — tất cả một nơi</span></li>
+        <li><span class="chk">✅</span><span><strong>AI audit OKR tự động:</strong> Kiểm tra chuẩn SMART &amp; alignment — dùng DeepSeek v3.1</span></li>
+        <li><span class="chk">✅</span><span><strong>Phân cấp top-down:</strong> CEO → C-level → Trưởng phòng → Nhân viên — AI assign đúng người</span></li>
+        <li><span class="chk">✅</span><span><strong>Dashboard real-time:</strong> Tiến độ cập nhật hàng ngày — lãnh đạo xem ngay trên điện thoại</span></li>
+        <li><span class="chk">✅</span><span><strong>Tính năng AI hiện đang miễn phí</strong> — có thể trải nghiệm ngay hôm nay</span></li>
+      </ul>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">10 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 11 — THỦY DEMO SCREENSHOT
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s11">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:20px; justify-content:center;">
+      <div class="tag" style="align-self:flex-start;">Demo · AI Audited OKR</div>
+      <div style="font-size:40px; font-weight:800; color:#0A1628; line-height:1.2;">Giao diện hệ thống <span style="color:#0028D0;">Rikkei Digital</span></div>
+      <div class="divider"></div>
+      <div style="border-radius:14px; overflow:hidden; border:2px solid rgba(0,40,208,0.2); box-shadow:0 8px 40px rgba(0,0,0,0.12);">
+        <img src="../images/Rikkei-digital-demo.png" alt="Rikkei Digital demo" style="width:100%; height:auto; display:block;">
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">11 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 12 — THỦY CASE STUDIES
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s12">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px;">Case Studies · Rikkei Digital</div>
+      <div style="font-size:50px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">Từ <span style="color:var(--gold);">22%</span> lên <span style="color:#0028D0;">90%</span> OKR đạt chuẩn</div>
+      <div class="divider"></div>
+
+      <div style="display:flex; gap:28px; margin-bottom:28px;">
+        <div class="stat-card">
+          <div class="num">22% → 90%</div>
+          <div class="label">OKR đạt chuẩn<br>(Tập đoàn BĐS 400 nhân sự)</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" style="font-size:48px;">10→2 người</div>
+          <div class="label">Sắp xếp ca livestream<br>(Công ty e-com top 1)</div>
+        </div>
+      </div>
+
+      <div style="font-size:26px; font-weight:700; color:#0028D0; margin-bottom:14px;">Case 1 — Tập đoàn BĐS, 400 nhân sự · Sau 1 năm triển khai:</div>
+      <ul class="check-list" style="gap:14px;">
+        <li><span class="chk">✅</span><span>OKR đạt chuẩn: <span class="hl">22% → 90%</span></span></li>
+        <li><span class="chk">✅</span><span>100% dữ liệu minh bạch, khách quan — cập nhật real-time hàng ngày</span></li>
+        <li><span class="chk">✅</span><span>Thời gian phê duyệt Key Result giảm đáng kể</span></li>
+      </ul>
+
+      <div style="font-size:26px; font-weight:700; color:#0028D0; margin:18px 0 14px;">Case 2 — E-commerce top 1 sắp xếp ca livestream:</div>
+      <ul class="check-list" style="gap:14px;">
+        <li><span class="chk">✅</span><span>Từ <span class="hl">10 người · 8 tiếng/ngày</span> → chỉ <span class="hl">2 người</span> kiểm tra kết quả</span></li>
+        <li><span class="chk">✅</span><span>6 người được giải phóng → làm việc trực tiếp với brand &amp; KOL</span></li>
+      </ul>
+
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">12 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 13 — THỦY GIFT / OFFER
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s13">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:40px; justify-content:center; align-items:center; text-align:center;">
+      <div style="font-size:80px; line-height:1;">🎁</div>
+      <div class="tag" style="align-self:center;">Ưu đãi đặc biệt · Rikkei Digital</div>
+      <div style="font-size:52px; font-weight:900; color:#0A1628; line-height:1.2;">Dành riêng cho<br><span style="color:#0028D0;">Cộng Đồng DNTC AI</span></div>
+      <div class="divider" style="align-self:center;"></div>
+      <div style="display:flex; flex-direction:column; gap:24px; width:100%;">
+        <div style="background:rgba(0,40,208,0.05); border:1.5px solid rgba(0,40,208,0.2); border-radius:16px; padding:28px 40px; font-size:30px; font-weight:600; color:#0A1628; text-align:left;">
+          ✅ <strong style="color:#0028D0;">1 buổi tư vấn 1:1 miễn phí</strong> — khám bệnh hiện trạng vận hành
+        </div>
+        <div style="background:rgba(212,165,32,0.07); border:1.5px solid rgba(212,165,32,0.35); border-radius:16px; padding:28px 40px; font-size:30px; font-weight:600; color:#0A1628; text-align:left;">
+          💰 <strong style="color:var(--gold);">Giảm 3%</strong> phí triển khai — hợp tác trước hết tháng 4/2026
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">13 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 14 — Q&A HIGHLIGHTS
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s14">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px;">❓ Q&amp;A Nổi bật</div>
+      <div style="font-size:54px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;">Câu hỏi <span style="color:#0028D0;">được hỏi nhiều nhất</span></div>
+      <div class="divider"></div>
+
+      <div class="qa-list">
+        <div class="qa-card">
+          <div class="q">Data chưa sạch — AI có xử lý được không?</div>
+          <div class="a">Chỉ cần dữ liệu đã "có cấu trúc" (Excel hoặc phần mềm). AI agent tự tổng hợp, merge và làm sạch. Nếu vẫn tay, AI viết agent tổng hợp trước. <span class="hl">Con người không cần xử lý thủ công.</span></div>
+        </div>
+        <div class="qa-card">
+          <div class="q">Data trên Lark có bảo mật &amp; tuân thủ Nghị định 13 không?</div>
+          <div class="a">Hợp đồng có điều khoản bảo mật riêng. Khách hàng yêu cầu cao → Rikkei hỗ trợ <span class="hl">ký NDA trực tiếp với Lark.</span></div>
+        </div>
+        <div class="qa-card">
+          <div class="q">OKR đang trên Excel thì triển khai lên Lark như thế nào?</div>
+          <div class="a">Không import thẳng — phải <span class="hl">clean data &amp; đúng model OKR trước.</span> Rikkei đồng hành từ bước xác định mindset: thế nào là Objective, thế nào là Key Result đúng chuẩn.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">14 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 15 — KEY TAKEAWAYS
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s15">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/></svg>
+
+    <div class="content" style="gap:0;">
+      <div class="tag" style="margin-bottom:20px;">🎯 Key Takeaways · Webinar 03</div>
+      <div style="font-size:52px; font-weight:900; color:#0A1628; line-height:1.15; margin-bottom:8px;"><span style="color:#0028D0;">4 điều</span> mang về từ hôm nay</div>
+      <div class="divider"></div>
+
+      <ol class="takeaway-list">
+        <li>
+          <div class="num-badge">1</div>
+          <div class="text"><strong>Thiếu hệ thống, không phải thiếu AI.</strong> Khi AI nằm ở từng cá nhân và dữ liệu rải rác, hiệu suất tổng thể vẫn không đổi.</div>
+        </li>
+        <li>
+          <div class="num-badge">2</div>
+          <div class="text"><strong>Chuẩn hóa trước, tự động hóa sau.</strong> Dữ liệu sạch = điều kiện đủ, không phải điều kiện cần. Mindset đúng quan trọng hơn dữ liệu hoàn hảo.</div>
+        </li>
+        <li>
+          <div class="num-badge">3</div>
+          <div class="text"><strong>Số liệu không nói dối.</strong> 22% → 90% OKR đạt chuẩn. Giảm 50% nhân sự vận hành. Từ 10 → 2 người xử lý ca livestream.</div>
+        </li>
+        <li>
+          <div class="num-badge">4</div>
+          <div class="text"><strong>Bước đầu tiên luôn là: khám bệnh.</strong> Mỗi doanh nghiệp có đặc thù riêng. Cả hai speaker đều cung cấp buổi tư vấn miễn phí.</div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">15 / 16</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SLIDE 16 — CTA
+  ════════════════════════════════════════════════════════════ -->
+  <div class="slide" id="s16">
+    <div class="brand-bar"></div>
+    <div class="grid-overlay"></div>
+    <svg class="corner-deco" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080">
+      <!-- Corner glow blobs — stay at edges, never over text -->
+      <ellipse cx="1060" cy="40"   rx="380" ry="280" fill="url(#cd-tr)"/>
+      <ellipse cx="20"   cy="1040" rx="320" ry="280" fill="url(#cd-bl)"/>
+      <ellipse cx="20"   cy="60"   rx="240" ry="200" fill="url(#cd-tl)"/>
+      <ellipse cx="1060" cy="1040" rx="260" ry="240" fill="url(#cd-br)"/>
+      <!-- Decorative rings at corners -->
+      <circle cx="1080" cy="0"    r="220" fill="none" stroke="#0028D0" stroke-width="1.5" opacity="0.14"/>
+      <circle cx="1080" cy="0"    r="148" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.10"/>
+      <circle cx="0"    cy="1080" r="200" fill="none" stroke="#6D28D9" stroke-width="1.5" opacity="0.12"/>
+      <circle cx="0"    cy="1080" r="130" fill="none" stroke="#9D68F8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="1080" cy="1080" r="180" fill="none" stroke="#4A70D8" stroke-width="1"   opacity="0.09"/>
+      <circle cx="0"    cy="0"    r="160" fill="none" stroke="#0891B2" stroke-width="1"   opacity="0.08"/>
+      <!-- Abstract arc lines near top and bottom edges -->
+      <path d="M 0,0 Q 540,80 1080,0"    fill="none" stroke="#0028D0" stroke-width="1"   opacity="0.07"/>
+      <path d="M 0,1080 Q 540,1000 1080,1080" fill="none" stroke="#6D28D9" stroke-width="1" opacity="0.07"/>
+      <!-- Small accent dots at edge midpoints -->
+      <circle cx="540"  cy="6"    r="3" fill="#0028D0" opacity="0.20"/>
+      <circle cx="540"  cy="1074" r="3" fill="#6D28D9" opacity="0.18"/>
+      <circle cx="6"    cy="540"  r="3" fill="#0891B2" opacity="0.18"/>
+      <circle cx="1074" cy="540"  r="3" fill="#4A70D8" opacity="0.20"/>
+    </svg>
+    <svg class="particles-bg" xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible;"><ellipse cx="960" cy="160" rx="260" ry="220" fill="url(#pg1)"/><ellipse cx="100" cy="900" rx="200" ry="200" fill="url(#pg2)"/><ellipse cx="540" cy="540" rx="300" ry="260" fill="url(#pg3)"/><circle cx="960" cy="155" r="130" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.14"/><circle cx="105" cy="895" r="105" fill="none" stroke="#4A70D8" stroke-width="1" opacity="0.12"/><circle cx="72" cy="118" r="3" fill="#4A70D8" opacity="0.40"/><circle cx="682" cy="98" r="3" fill="#00D4FF" opacity="0.24"/><line x1="147" y1="234" x2="173" y2="234" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/><line x1="160" y1="221" x2="160" y2="247" stroke="#4A70D8" stroke-width="1.2" opacity="0.24"/><line x1="898" y1="400" x2="924" y2="400" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/><line x1="911" y1="387" x2="911" y2="413" stroke="#00D4FF" stroke-width="1.2" opacity="0.20"/><polygon points="502,192 514,204 502,216 490,204" fill="none" stroke="#4A70D8" stroke-width="1.2" opacity="0.20"/><polygon points="782,882 794,894 782,906 770,894" fill="none" stroke="#00D4FF" stroke-width="1.2" opacity="0.18"/></svg>
+
+    <div class="content" style="justify-content:center; gap:32px;">
+      <div class="tag">Dành cho CEO &amp; Lãnh đạo Doanh nghiệp</div>
+
+      <div style="font-size:68px; font-weight:900; color:#0A1628; line-height:1.1;">
+        Bạn đang giải<br>
+        <span style="color:#0028D0;">bài toán nào</span><br>
+        trong vận hành?
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="font-size:28px; font-weight:500; color:#8899AA; line-height:1.5;">
+        Cộng đồng <strong style="color:#0A1628;">Doanh Nghiệp Thực Chiến AI &amp; Automation</strong> là nơi kết nối bài toán thật với giải pháp thật — không lý thuyết, không pitch.
+      </div>
+
+      <div class="stat-row" style="gap:20px;">
+        <div class="stat-card" style="padding:22px 16px;">
+          <div class="num" style="font-size:36px;">Tối T5</div>
+          <div class="label">Webinar hàng tuần · 20:00</div>
+        </div>
+      </div>
+
+      <div class="cta-btn" style="margin-top:8px;">Tham gia nhóm ngay</div>
+    </div>
+
+    <div class="bottom-logo"><div class="logo-mark"><span class="dot"></span>Cộng Đồng Doanh Nghiệp Thực Chiến AI &amp; Automation</div></div>
+    <div class="slide-num">16 / 16</div>
+  </div>
+
+</body>
+</html>
